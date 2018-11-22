@@ -1,3 +1,5 @@
+import Tester2 from './tester'
+
 /**
  * BASE TEST
  */
@@ -93,6 +95,10 @@ function init() {
   
 // Include guard: only execute once
 // if (!window.injected) {
-    injected = true;
+    window.injected = true;
     init();
 // }
+
+let tester2 = new Tester2();
+tester2.init();
+tester2.runTests();

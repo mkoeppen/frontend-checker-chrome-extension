@@ -4,16 +4,21 @@
 
 'use strict';
 
-let changeColor = document.getElementById('changeColor');
-chrome.storage.sync.get('color', function(data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
+// let changeColor = document.getElementById('changeColor');
+// chrome.storage.sync.get('color', function(data) {
+//   changeColor.style.backgroundColor = data.color;
+//   changeColor.setAttribute('value', data.color);
+// });
 
-changeColor.onclick = function(element) {
+// changeColor.onclick = function(element) {
+    
+//   };
+
+
+window.onload = function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.executeScript(null, {file: "contentScript.js"}, function() {
             // chrome.tabs.sendMessage(null, { action: "initTester", tester: tester });
         });
     });
-  };
+}
