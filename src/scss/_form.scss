@@ -1,0 +1,37 @@
+.k-form {
+    margin: 0;
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    &__row {
+        & + & {
+            margin-top: 20px;
+        }
+
+        &--center {
+            display: flex;
+            justify-content: space-around;
+        }
+    }
+
+    input[type="text"], 
+    textarea {
+        padding: 5px;
+        display: block;
+        width: 100%;
+        border: 1px solid #e3e3e3;
+        border-radius: 2px;
+    }
+
+    textarea {
+        max-width: 100%;
+        height: 100px;
+        min-width: 100%;
+        white-space: nowrap;
+        overflow: auto;
+    }
+}

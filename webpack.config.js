@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+require("@babel/polyfill");
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack_rules = [
     {
@@ -27,8 +28,8 @@ const webpack_rules = [
 const webpackOption = {
     entry: {
         contentScript: ["./src/js/contentScript.js"],
-        background: ["./src/js/background.js"],
-        popup: ["./src/js/popup.js"],
+        background: ["@babel/polyfill", "./src/js/background.js"],
+        popup: ["@babel/polyfill", "./src/js/popup.js"],
         options: ["./src/js/options.js"],
         cssBundle: ["./src/scss/bundle.scss"]
     },

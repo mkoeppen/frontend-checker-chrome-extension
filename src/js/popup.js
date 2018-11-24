@@ -3,6 +3,8 @@
 import Tester from './tester'
 import TabStrip from './tabStrip'
 import TestList from './testList'
+import ProjectHandler from './projectHandler';
+import ProjectView from './projectView';
 
 class Popup {
     constructor(popupElement) {
@@ -11,6 +13,7 @@ class Popup {
         this.tabStrip = undefined;
         this.automatedTestsList = document.querySelector(".k-automated-tests")
         this.manualTestsList = document.querySelector(".k-manual-tests")
+        this.projectHandler = new ProjectHandler();
     }
     init() {        
         this.initTester();
@@ -51,8 +54,7 @@ class Popup {
                     title: "Projects",
                     classList: "k-projects",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
-                        var element = document.createElement("div").innerText = "Coming Soon";
-                        contentElement.append(element);
+                        contentElement.append(new ProjectView(this.projectHandler).generate());
                     }
                 }
             ]
