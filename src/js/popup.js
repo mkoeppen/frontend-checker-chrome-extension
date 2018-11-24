@@ -1,28 +1,8 @@
 'use strict';
 
 import Tester from './tester'
+import Checkbox from './checkbox'
 import jsHelper from './jsHelper'
-
-class Checkbox {
-    constructor(name) {
-        this.element = undefined;
-        this.name = name;
-    }
-    generate() {
-        this.element = document.createElement("label");
-        this.element.classList = "label";
-
-        this.element.innerHTML = `
-                                <input  class="label__checkbox" type="checkbox" name=""/>
-                                <span class="label__text">
-                                    <span class="label__check">
-                                        <i class="fa fa-check icon"></i>
-                                    </span>
-                                </span>`;
-
-        return this.element;
-    }
-}
 
 class Popup {
     constructor(popupElement) {
@@ -66,13 +46,15 @@ class Popup {
             testContainer.append(stateContainer);
             
             // checkbox
-            var checkboxContainer = document.createElement("div");
+            var checkboxContainer = document.createElement("label"),
+            checkbox = new Checkbox(test.title);
             checkboxContainer.classList = "k-test__checkbox-container";
-            checkboxContainer.append(new Checkbox(test.title).generate());
+            checkboxContainer.append(checkbox.generate());
             testContainer.append(checkboxContainer);
 
             // title
-            var titleContainer = document.createElement("div");
+            var titleContainer = document.createElement("label");
+            titleContainer.setAttribute("for", checkbox.id);
             titleContainer.classList = "k-test__title";
             titleContainer.innerHTML = `${test.title}`;
             testContainer.append(titleContainer);

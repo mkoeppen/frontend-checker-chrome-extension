@@ -1,0 +1,142 @@
+$inimation-time: 0.2s;
+
+$checkbox-wrapper-width: 20px;
+
+$checkbox-width: $checkbox-wrapper-width * 0.5;
+$checkbox-color: #e6e6e6;
+$checkbox-color-inner-hover: #b6b6b6;
+$checkbox-border: $checkbox-width / 40 * 3;
+$checkbox-border-radius: $checkbox-width / 40 * 5;
+
+$check-color: #ffffff;
+$check-long-size: $checkbox-wrapper-width * 0.5;
+$check-small-size: $check-long-size * 0.5;
+$check-border: $check-long-size / 40 * 6;
+$check-horizontal-position-correction: $check-long-size / 40 * 9; 
+$check-vertical-position-correction: $check-long-size / 40 * 2; 
+
+.k-checkbox__wrapper {
+    position: absolute;      
+    top: 50%;      
+    left: 50%;         
+    transform: translate3d(-50%,-50%,0);
+}
+
+.k-checkbox__input {
+  position:absolute;
+  left: -9999px;
+} 
+
+.k-checkbox {
+  display: block;
+  background: $checkbox-color;
+  height: $checkbox-wrapper-width;
+  width: $checkbox-wrapper-width;   
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+  
+  &:before, 
+  &:after {
+    content: "";
+    width: $checkbox-width;
+    height: $checkbox-width;
+    border: $checkbox-border solid $check-color;
+    border-radius: $checkbox-border-radius;
+    display: inline-block;
+    position: absolute;
+    box-sizing: border-box;
+  }
+  
+  &:before {
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    transform-origin: bottom left;
+    bottom: calc(50% - (#{$checkbox-width/2}));
+    left: calc(50% - (#{$checkbox-width/2}));
+  }
+  
+  &:after {
+    border-top-color: transparent;
+    border-left-color: transparent;
+    transform-origin: bottom left;
+    bottom: calc(50% - (#{$checkbox-width/2}));
+    left: calc(50% - (#{$checkbox-width/2}));
+    border-right-color: lighten(darken($check-color,1%),.5%); // HACK: fix strange render prolbem on animation
+  }
+  
+  .k-checkbox__input:checked + & {
+    animation: checked $inimation-time linear forwards;
+    
+    &:before {      
+      animation: checked-small-part $inimation-time linear forwards;
+    }
+    
+    &:after {      
+      animation: checked-longp-part $inimation-time linear forwards;
+    }
+  }
+  
+  .k-checkbox__input:not(:checked) + &:hover:before {
+    background: $checkbox-color-inner-hover;    
+  }
+}
+
+@keyframes checked {
+  0% { 
+  }
+  50% {    
+  }
+  100% {
+    background: green;    
+    border-radius: 50%; 
+  }
+}
+
+
+@keyframes checked-small-part {
+
+  
+  0% {
+  }
+  50% {
+    width: $checkbox-border;
+    border-top-width: $checkbox-border;
+    border-bottom-width: $checkbox-border;
+    border-left-width: $checkbox-border;
+    border-radius: $checkbox-border-radius;
+    height: $checkbox-width;    
+  }
+  100% {
+    width: $check-border;
+    border-radius: 0;
+    border-top-width: 0;   
+    border-bottom-width: 0;
+    border-left-width: $check-border;
+    height: $check-small-size;
+    transform: rotate(-45deg) translate($check-horizontal-position-correction + $check-vertical-position-correction, $check-horizontal-position-correction - $check-vertical-position-correction);  
+  }
+}
+
+@keyframes checked-longp-part {
+  0% {
+  }
+  50% {
+    height: $checkbox-border;
+    border-left-width: $checkbox-border;
+    border-right-width: $checkbox-border;
+    border-bottom-width: $checkbox-border;
+    border-radius: $checkbox-border-radius;
+    width: $checkbox-width;
+  }
+  100% {
+    height: $check-border;
+    border-radius: 0;
+    border-left-width: 0;   
+    border-right-width: 0;
+    border-bottom-width: $check-border;
+    width: $check-long-size;
+    transform: rotate(-45deg) translate($check-horizontal-position-correction + $check-vertical-position-correction, $check-horizontal-position-correction - $check-vertical-position-correction);
+  }
+}
+
