@@ -32,6 +32,8 @@
 
     &__content {
         display: none;
+        max-height: 550px;
+        overflow: auto;
 
         &.k-is-active {
             display: block;
