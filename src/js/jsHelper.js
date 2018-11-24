@@ -13,4 +13,12 @@ export function guid() {
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 
-export default { empty,guid }
+export function getIndex(child) {
+    var i = 0;
+    while( (child = child.previousSibling) != null ) 
+        i++;
+
+    return i;
+}
+
+export default { empty,guid, getIndex }

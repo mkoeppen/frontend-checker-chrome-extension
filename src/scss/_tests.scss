@@ -1,6 +1,7 @@
 .k-test-list {
     padding: 0;
     list-style-type: none;
+    margin: 0;
 }
 
 .k-test {
@@ -35,6 +36,7 @@
         font-weight: bold;
         padding: 2px 0;
         cursor: pointer;
+        display: block;
     }
 
     &__description {

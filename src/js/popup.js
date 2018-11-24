@@ -1,72 +1,62 @@
 'use strict';
 
 import Tester from './tester'
-import Checkbox from './checkbox'
-import jsHelper from './jsHelper'
+import TabStrip from './tabStrip'
+import TestList from './testList'
 
 class Popup {
     constructor(popupElement) {
         this.tester = undefined;
         this.popup = popupElement;
+        this.tabStrip = undefined;
         this.automatedTestsList = document.querySelector(".k-automated-tests")
-        this.manuelTestsList = document.querySelector(".k-manuel-tests")
+        this.manualTestsList = document.querySelector(".k-manual-tests")
     }
-    init() {
-        
+    init() {        
         this.initTester();
         this.initTabStrip();
-        this.initAutomatedTests();          
-        this.generateManuelTestList();          
-        //currentTester.runTests();
     }
     initTester() {        
         this.tester = new Tester();
         this.tester.init();
     }
-    initTabStrip() {
-
-    }
-    initAutomatedTests() {
-        
-    }
-    generateManuelTestList() {
-        var manuelTests = this.tester.getAllManuelTests();
-
-        // clean list
-        jsHelper.empty(this.manuelTestsList);
-
-        manuelTests.forEach((test) => {
-            var testContainer = document.createElement("li");
-            testContainer.classList = "k-test";
-
-            // state
-            var stateContainer = document.createElement("div");
-            stateContainer.classList = `k-test__state k-test__state--${test.priority.toLowerCase()}`;
-            stateContainer.setAttribute("title", test.priority);
-            testContainer.append(stateContainer);
-            
-            // checkbox
-            var checkboxContainer = document.createElement("label"),
-            checkbox = new Checkbox(test.title);
-            checkboxContainer.classList = "k-test__checkbox-container";
-            checkboxContainer.append(checkbox.generate());
-            testContainer.append(checkboxContainer);
-
-            // title
-            var titleContainer = document.createElement("label");
-            titleContainer.setAttribute("for", checkbox.id);
-            titleContainer.classList = "k-test__title";
-            titleContainer.innerHTML = `${test.title}`;
-            testContainer.append(titleContainer);
-
-            // description
-            var descriptionContainer = document.createElement("div");
-            descriptionContainer.classList = "k-test__description";
-            descriptionContainer.innerHTML = `${test.description}`;
-            testContainer.append(descriptionContainer);
-
-            this.manuelTestsList.append(testContainer);
-        })
+    initTabStrip() { 
+        this.tabStrip = new TabStrip(document.querySelector(".k-tab-strip"), {
+            tabs: [
+                {
+                    title: "Manual",
+                    classList: "k-manual-tests",
+                    initTabFunc: (contentElement, titleElement, tabStrip) => {
+                        var manualTests = this.tester.getAllManualTests();
+                        contentElement.append(new TestList(manualTests).generate());
+                    }
+                },
+                {
+                    title: "Automated",
+                    classList: "k-automated-tests",
+                    initTabFunc: (contentElement, titleElement, tabStrip) => {
+                        var manualTests = this.tester.getAllAutomatedTests();
+                        contentElement.append(new TestList(manualTests).generate());                        
+                    }
+                },
+                {
+                    title: "All",
+                    classList: "k-all-tests",
+                    initTabFunc: (contentElement, titleElement, tabStrip) => {
+                        var manualTests = this.tester.getAllTests();
+                        contentElement.append(new TestList(manualTests).generate());                        
+                    }
+                },
+                {
+                    title: "Projects",
+                    classList: "k-projects",
+                    initTabFunc: (contentElement, titleElement, tabStrip) => {
+                        var element = document.createElement("div").innerText = "Coming Soon";
+                        contentElement.append(element);
+                    }
+                }
+            ]
+        });
     }
 }
 

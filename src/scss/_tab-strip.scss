@@ -1,0 +1,40 @@
+.k-tab-strip {
+
+    &__tabs {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        margin: 0;
+        background: #626262;
+        border-top: 3px solid #626262;
+    }
+
+    &__tab {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6px 5px;
+        background: #626262;
+        font-weight: bold;
+        font-size: 10px;
+        border-right: 1px solid #777777;
+        color: #cacaca;
+        cursor: pointer;
+
+        &.k-is-active {
+            background: #f8f8f8;
+            color: black;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+    }
+
+    &__content {
+        display: none;
+
+        &.k-is-active {
+            display: block;
+        }
+    }
+}
