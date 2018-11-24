@@ -29,4 +29,10 @@ export default class {
     runTests() {
         console.log("run Tester2 yeah");
     }
+    getAllAutomatedTests() {
+        return this.tests.filter(function(test) { return typeof test.automatedTest === "function" });
+    }
+    getAllManuelTests() {
+        return this.tests.filter(function(test) { return typeof test.automatedTest !== "function" });
+    }
 }

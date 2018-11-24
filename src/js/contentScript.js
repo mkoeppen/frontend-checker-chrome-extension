@@ -1,4 +1,4 @@
-import Tester2 from './tester'
+
 
 /**
  * BASE TEST
@@ -98,7 +98,3 @@ function init() {
     window.injected = true;
     init();
 // }
-
-let tester2 = new Tester2();
-tester2.init();
-tester2.runTests();
