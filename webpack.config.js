@@ -1,13 +1,36 @@
 const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const webpack_rules = [];
+const webpack_rules = [
+    {
+        test: /.scss$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: '[name].css',
+                    outputPath: 'css/'
+                }
+            },
+            {
+                loader: 'extract-loader'
+            },
+            {
+                loader: 'css-loader'
+            },
+            {
+                loader: 'sass-loader'
+            }
+        ]
+    }
+];
 const webpackOption = {
     entry: {
         contentScript: ["./src/js/contentScript.js"],
         background: ["./src/js/background.js"],
         popup: ["./src/js/popup.js"],
-        options: ["./src/js/options.js"]
+        options: ["./src/js/options.js"],
+        cssBundle: ["./src/scss/bundle.scss"]
     },
     output: {
         path: path.resolve(__dirname, "./dist"),

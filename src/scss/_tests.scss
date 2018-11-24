@@ -1,0 +1,61 @@
+.k-test-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.k-test {
+    margin-bottom: 2px;
+    background: #ffffff;
+    position: relative;
+    padding-left: calc(10px + 40px);
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    &__checkbox-container {
+        position: absolute;
+        width: 40px;
+        height: 100%;
+        left: 10px;
+        font-family: 'Lato', monospace;
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/**
+* Test States
+*/
+
+.k-test__state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+
+    &:before {
+        content: "";
+        height: 100%;
+        width: 100%;
+        background: #bbb;
+        display: block;
+    }
+
+    &--medium:before {
+        background: #f3ad2d;
+    }
+
+    &--high:before {
+        background: #d05f5f;
+    }
+
+    &--low:before {
+        background: #3db472;
+    }
+}
