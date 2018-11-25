@@ -22,4 +22,5 @@
 - show Status at icon
 - disable/enable Auto run tests
 - configure Tests for url in options
-- add "new version" info with list of new tests 
+- add "new version" info with list of new tests
+- add custom tests in options

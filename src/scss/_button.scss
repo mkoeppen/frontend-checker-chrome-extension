@@ -5,4 +5,11 @@
     background: darkorange;
     color: white;
     font-weight: bold;
+
+    &--icon-only {
+        padding-left: 0;
+        padding-right: 0;
+        width: 30px;
+        height: 30px;
+    }
 }

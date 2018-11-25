@@ -5,47 +5,106 @@ import jsHelper from './jsHelper'
 export default class ProjectHandler {
     constructor() {
         this.projectList = [];
-        this.loadProjectList();
         this.activeProject = undefined;
     }
-    loadProjectList() {
-        chrome.storage.sync.get(['projectList'], (result) => {
-            console.log('Value currently is ' + result.projectList);
-            this.projectList = result.projectList || [];
+    loadProjectListAsync() {
+        var that = this;
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get(['projectList'], (result) => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    console.log('Value currently is ' + result.projectList);
+                    that.projectList = result.projectList || [];
+                    resolve(result.projectList);
+                }
+            });
         });
     }
-    saveProjectList() {
-        chrome.storage.local.set({projectList: this.projectList}, () => {
-            console.log('Value is set to ' + this.projectList);
+    saveProjectListAsync() {
+        var that = this;
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.set({projectList: that.projectList}, () => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    console.log('Value is set to ' + that.projectList);
+                    resolve();
+                }
+            });
         });
     }
-    saveProjectState(projectId, state) {
-        var stateObject = {};
-        stateObject[`project_state_${projectId}`] = state;
-        chrome.storage.local.set(stateObject, () => {
-            console.log('Value is set to ' + stateObject);
+    saveProjectStateAsync(projectId, state) {
+        return new Promise((resolve, reject) => {
+            var stateObject = {};
+            stateObject[`project_state_${projectId}`] = state;
+            chrome.storage.local.set(stateObject, () => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    console.log('Value is set to ' + stateObject);
+                    resolve();
+                }
+            });
+        });
+    }
+    deleteProjectStateAsync(projectId) {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.remove(`project_state_${projectId}`, () => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    resolve();
+                }
+            });
         });
     }
     initNewProject(callback) {
         chrome.tabs.getSelected(null, (tab) => {
-            var guid = jsHelper.guid();
+            var id = jsHelper.guid();
             var pathArray = tab.url.split( '/' );
             var protocol = pathArray[0];
             var host = pathArray[2];
             var whitelistUrl = protocol + '//' + host.replace("/", "\/").replace(".", "\.") + "/.*";
 
             callback({
-                id: guid,
+                id: id,
                 name: host,
                 blacklistUrls: "",
                 whitelistUrls: whitelistUrl
             });
         });
     }
-    saveProject(project, state) {
-        this.loadProjectList();        
-        this.projectList.push(project);
-        this.saveProjectList();
-        this.saveProjectState(project.guid, state);
+    saveProjectAsync(project, state) {
+        return new Promise((resolve, reject) => {
+            this.loadProjectListAsync().then(() => {
+                this.projectList.push(project);
+                Promise.all([
+                    this.saveProjectListAsync(), 
+                    this.saveProjectStateAsync(project.id, state)
+                ]).then(() => {
+                    resolve();
+                })
+            });   
+        });     
+    }
+    deleteProjectAsync(projectId) {
+        return new Promise((resolve, reject) => {
+            this.loadProjectListAsync().then(() => {
+                this.projectList = this.projectList.filter((p) => {
+                    return p.id !== projectId;
+                });
+                Promise.all([
+                    this.saveProjectListAsync(), 
+                    this.deleteProjectStateAsync(projectId)
+                ]).then(() => {
+                    resolve();
+                })
+            });   
+        });     
     }
 }

@@ -8,6 +8,7 @@ export default class ProjectList {
         this.element = undefined;
         this.projectDetailsElement = undefined;
         this.projectDetailsList = undefined;
+        this.toolbar = undefined;
     }
     generate() {        
         this.element = document.createElement("div");
@@ -25,11 +26,25 @@ export default class ProjectList {
         // init project list        
         this.projectDetailsList = document.createElement("ul");
         this.projectDetailsList.classList.add("k-project-list");
-        this.element.append(this.projectDetailsList);
+        this.element.append(this.projectDetailsList);        
+                
+        // init project list        
+        this.toolbar = document.createElement("div");
+        this.toolbar.classList.add("k-project-list");
+        this.element.append(this.toolbar);
+
+        var newProjectButton = document.createElement("button");
+        newProjectButton.classList.add("k-button");
+        newProjectButton.innerHTML = "+";
+        newProjectButton.addEventListener("click", () => {
+            this.projectHandler.initNewProject((project) => {
+                this.initProjectDetails(project, true);
+            });      
+        })
+        this.toolbar.append(newProjectButton);
         
-        if(this.projectHandler.projectList.length === 0) {
-            
-        }
+
+        this.refreshProjectList();
 
         return this.element;
     }
@@ -60,7 +75,10 @@ export default class ProjectList {
                     whitelistUrls: currentForm.querySelector("textarea[name='whitelistUrls']").value,
                 }
 
-                console.log(project);
+                this.projectHandler.saveProjectAsync(project, {}).then(() => {
+                    this.refreshProjectList();
+                    jsHelper.empty(this.projectDetailsElement);
+                });
 
                 return false;
             })
@@ -69,6 +87,35 @@ export default class ProjectList {
         } else {
 
         }
+    }
+    refreshProjectList() {
+
+        jsHelper.empty(this.projectDetailsList);
+
+        this.projectHandler.loadProjectListAsync().then((projectList) => {
+            projectList.forEach(project => {
+                var projectElement = document.createElement("li");
+                projectElement.classList.add("k-project");
+                projectElement.setAttribute("data-project-id", project.id);
+                projectElement.innerHTML = `
+                <span class="k-project__name">${project.name}</span>
+                <div class="k-project__controls">
+                    <button class="k-button k-button--icon-only k-project__delete-button" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <button class="k-button k-button--icon-only k-project__edit-button" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                </div>`;
+
+                this.projectDetailsList.append(projectElement);
+
+                projectElement
+                    .querySelector(".k-project__delete-button")
+                    .addEventListener("click", (e) => {
+                        var project = e.target.closest(".k-project");
+                        this.projectHandler.deleteProjectAsync(project.getAttribute("data-project-id")).then(() => {
+                            this.refreshProjectList();
+                        });
+                    });
+            });
+        });
     }
     
 }

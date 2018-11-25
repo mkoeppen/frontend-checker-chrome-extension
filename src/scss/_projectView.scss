@@ -1,3 +1,31 @@
 .k-project-details {
     padding: 20px;
 }
+
+.k-project-list {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+}
+
+.k-project {
+    display: flex;
+    background: white;
+    margin-bottom: 2px;
+    justify-content: space-between;
+
+    &__controls {
+        display: flex;
+        padding: 0 10px;
+        align-items: center;
+
+        .k-button + .k-button {
+            margin-left: 10px; 
+        }
+    }
+}
+
+.k-project > .k-project__name {
+    padding: 10px 20px;
+    font-weight: bold;
+}
