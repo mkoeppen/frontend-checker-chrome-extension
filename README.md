@@ -3,10 +3,7 @@
 # ToDo
 
 - project handling
-    - save in storage
-    - list all projects
     - show details on item click
-    - make project deletable
     - make project editable
     - configure tests for project
         - save test config
@@ -28,3 +25,4 @@
 - test categories in test list
 - sort tests via filter (categories, priority)
 - add other checklists
+- save projects in sync storage With option
