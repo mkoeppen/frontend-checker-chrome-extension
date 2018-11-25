@@ -15,6 +15,7 @@
     - load correct test configuration of project
     - export project
     - import project
+    - copy project function
 
 - add identifiers to tests and use them on checkboxes
 - runnable automated tests
@@ -25,3 +26,4 @@
 - add "new version" info with list of new tests
 - test categories in test list
 - sort tests via filter (categories, priority)
+- add other checklists
