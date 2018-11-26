@@ -3,26 +3,23 @@
 # ToDo
 
 - project handling
-    - show details on item click
-    - make project editable
-    - configure tests for project
-        - save test config
-        - change priority / disable tests
-    - load project with whitelist and blacklist
-    - load correct test configuration of project
-    - export project
-    - import project
-    - copy project function
+    - make project editable #1
+    - configure tests for projects #1
+        - save test config #1
+        - change priority / disable Tests #2
+    - load project with whitelist and Blacklist #1
+    - export projects #2
+    - import projects #2
+    - copy project function #2
+    - show current Matching projects #1
 
-- add identifiers to tests and use them on checkboxes
-- runnable automated tests
-- Show status in popup
-- show Status at icon
-- disable/enable Auto run tests
-- configure Tests for url in options
-- add "new version" info with list of new tests
-- add custom tests in options
-- test categories in test list
-- sort tests via filter (categories, priority)
-- add other checklists
-- save projects in sync storage With option
+- add identifiers to tests and use them on checkbox es #1
+- runnable automated tests #2
+- Show status in popup #1
+- disable/enable Auto run tests #2
+- add "new version" info with list of new Tests #2
+- add custom tests in options #3
+- test categories in test list #2
+- sort tests via filter (categories, priority) #2
+- add other checklists #2
+- save projects in sync storage With Option #2
