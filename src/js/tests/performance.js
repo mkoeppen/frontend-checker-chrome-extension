@@ -1,5 +1,6 @@
 export default [
   {
+    "id": "performance__page-weight",
     "title": "Page weight",
     "priority": "High",
     "description": "The weight of each page is between 0 and 500 KB.",
@@ -18,18 +19,21 @@ export default [
     "tags": ["all", "performance"]
   },
   {
+    "id": "performance__minified-html",
     "title": "Minified HTML",
     "priority": "Medium",
     "description": "Your HTML is minified.",
     "tags": ["all", "html", "performance"]
   },
   {
+    "id": "performance__",
     "title": "Lazy loading",
     "priority": "Medium",
     "description": "Images, scripts and CSS need to be lazy loaded to improve the response time of the current page (See details in their respective sections)",
     "tags": ["all", "best practices"]
   },
   {
+    "id": "performance__cookie-size",
     "title": "Cookie size",
     "priority": "Medium",
     "description": "If you are using cookies be sure each cookie doesn't exceed 4096 bytes and your domain name doesn't have more than 20 cookies.",
@@ -52,6 +56,7 @@ export default [
     "tags": ["all", "best practices"]
   },
   {
+    "id": "performance__third-party-components",
     "title": "Third party components",
     "priority": "Medium",
     "description": "",
@@ -65,6 +70,7 @@ export default [
     "tags": ["all", "best practices"]
   },
   {
+    "id": "performance__dns-resolution",
     "title": "DNS resolution",
     "priority": "Low",
     "description": "DNS of third-party services that may be needed are resolved in advance during idle time using dns-prefetch.",
@@ -72,6 +78,7 @@ export default [
     "tags": ["all", "requests"]
   },
   {
+    "id": "performance__preconnection",
     "title": "Preconnection",
     "priority": "Low",
     "description": "DNS lookup, TCP handshake and TLS negotiation with services that will be needed soon is done in advance during idle time using preconnect.",
@@ -79,6 +86,7 @@ export default [
     "tags": ["all", "requests"]
   },
   {
+    "id": "performance__prefetching",
     "title": "Prefetching",
     "priority": "Low",
     "description": "Resources that will be needed soon (e.g. lazy loaded images) are requested in advance during idle time using prefetch.",
@@ -86,6 +94,7 @@ export default [
     "tags": ["all", "requests"]
   },
   {
+    "id": "performance__preloading",
     "title": "Preloading",
     "priority": "Low",
     "description": "Resources needed in the current page (e.g. scripts placed at the end of <body>) in advance using preload.",
@@ -99,6 +108,7 @@ export default [
     "tags": ["all", "requests"]
   },
   {
+    "id": "performance__google-page-speed",
     "title": "Google PageSpeed",
     "priority": "High",
     "description": "All your pages were tested (not only the homepage) and have a score of at least 90/100.",

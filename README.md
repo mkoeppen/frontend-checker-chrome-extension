@@ -3,7 +3,6 @@
 # ToDo
 
 - project handling
-    - make project editable #1
     - configure tests for projects #1
         - save test config #1
         - change priority / disable Tests #2

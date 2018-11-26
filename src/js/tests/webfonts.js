@@ -1,5 +1,6 @@
 export default [
   {
+    "id": "webfonts__webfont-format",
     "title": "Webfont format",
     "priority": "High",
     "description": "WOFF, WOFF2 and TTF are supported by all modern browsers.",
@@ -24,12 +25,14 @@ export default [
     "tags": ["all", "webfont"]
   },
   {
+    "id": "webfonts__webfont-size",
     "title": "Webfont size",
     "priority": "High",
     "description": "Webfont sizes don't exceed 2 MB (all variants included).",
     "tags": ["all", "webfont"]
   },
   {
+    "id": "webfonts__webfont-loader",
     "title": "Webfont loader",
     "priority": "Low",
     "description": "Control loading behavior with a webfont loader.",

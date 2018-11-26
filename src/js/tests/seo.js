@@ -1,5 +1,6 @@
 export default [
   {
+    "id": "seo__google-analytics",
     "title": "Google Analytics",
     "priority": "High",
     "description": "Google Analytics is installed and correctly configured.",
@@ -16,6 +17,7 @@ export default [
     "tags": ["all", "seo"]
   },
   {
+    "id": "seo__headings-logic",
     "title": "Headings logic",
     "priority": "Medium",
     "description":
@@ -29,6 +31,7 @@ export default [
     "tags": ["all", "seo", "accessibility", "html"]
   },
   {
+    "id": "seo__sitemap-xml",
     "title": "sitemap.xml",
     "priority": "High",
     "description":
@@ -43,6 +46,7 @@ export default [
     "tags": ["all", "seo"]
   },
   {
+    "id": "seo__robots-txt",
     "title": "robots.txt",
     "priority": "High",
     "description": "The robots.txt is not blocking webpages.",
@@ -61,6 +65,7 @@ export default [
     "tags": ["all", "seo", "testing"]
   },
   {
+    "id": "seo__structured-data",
     "title": "Structured Data",
     "priority": "High",
     "description":
@@ -107,6 +112,7 @@ export default [
     "tags": ["all", "seo", "testing"]
   },
   {
+    "id": "seo__sitemap-html",
     "title": "Sitemap HTML",
     "priority": "Medium",
     "description":
@@ -120,6 +126,7 @@ export default [
     "tags": ["all", "seo", "html"]
   },
   {
+    "id": "seo__pagination-link-tags",
     "title": "Pagination link tags",
     "priority": "Medium",
     "description":

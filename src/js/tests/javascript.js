@@ -1,17 +1,20 @@
 export default [
   {
+    "id": "javascript__inline-js",
     "title": "JavaScript Inline",
     "priority": "High",
     "description": "You don't have any JavaScript code inline (mixed with your HTML code).",
     "tags": ["all", "javascript"]
   },
   {
+    "id": "javascript__concatenation",
     "title": "Concatenation",
     "priority": "High",
     "description": "JavaScript files are concatenated.",
     "tags": ["all", "javascript"]
   },
   {
+    "id": "javascript__minification",
     "title": "Minification",
     "priority": "High",
     "description": "JavaScript files are minified (you can add the .min suffix).",
@@ -24,6 +27,7 @@ export default [
     "tags": ["all", "javascript"]
   },
   {
+    "id": "javascript__javaScript security",
     "title": "JavaScript security",
     "priority": "High",
     "description": "",
@@ -36,6 +40,7 @@ export default [
     "tags": ["all", "javascript", "security"]
   },
   {
+    "id": "javascript__noscript-tag",
     "title": "noscript tag",
     "priority": "Medium",
     "description": "Use `<noscript>` tag in the HTML body if a script type on the page is unsupported or if scripting is currently turned off in the browser. This will be helpful in client-side rendering heavy apps such as React.js.",
@@ -48,6 +53,7 @@ export default [
     "tags": ["all", "javascript"]
   },
   {
+    "id": "javascript__non-blocking",
     "title": "Non-blocking",
     "priority": "Medium",
     "description": "JavaScript files are loaded asynchronously using async or deferred using defer attribute.",
@@ -60,6 +66,7 @@ export default [
     "tags": ["all", "javascript", "performance"]
   },
   {
+    "id": "javascript__modernizr",
     "title": "Modernizr",
     "priority": "Low",
     "description": "If you need to target some specific features you can use a custom Modernizr to add classes in your <html> tag.",
@@ -72,6 +79,7 @@ export default [
     "tags": ["all", "javascript"]
   },
   {
+    "id": "javascript__eslint",
     "title": "ESLint",
     "priority": "High",
     "description": "No errors are flagged by ESLint (based on your configuration or standards rules).",

@@ -1,5 +1,6 @@
 export default [
   {
+    "id": "head__doctype",
     "title": "Doctype",
     "priority": "High",
     "description": "The Doctype is HTML5 and is at the top of all your HTML pages.",
@@ -13,6 +14,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__charset",
     "title": "Charset",
     "priority": "High",
     "description": "The charset declared (UTF-8) is declared correctly.",
@@ -20,6 +22,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__viewport",
     "title": "Viewport",
     "priority": "High",
     "description": "The viewport is declared correctly.",
@@ -27,6 +30,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__title",
     "title": "Title",
     "priority": "High",
     "description": "A title is used on all pages",
@@ -47,6 +51,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__description",
     "title": "Description",
     "priority": "High",
     "description": "A meta description is provided, it is unique and doesn't possess more than 150 characters.",
@@ -60,6 +65,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__favicons",
     "title": "Favicons",
     "priority": "Medium",
     "description": "Each favicon has been created and displays correctly.",
@@ -92,6 +98,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__apple-web-app-meta",
     "title": "Apple Web App Meta",
     "priority": "Low",
     "description": "Apple meta-tags are present.",
@@ -109,6 +116,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__windows-tiles",
     "title": "Windows Tiles",
     "priority": "Low",
     "description": "Windows tiles are present and linked.",
@@ -122,6 +130,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__canonical",
     "title": "Canonical",
     "priority": "Medium",
     "description": "Use rel=\"canonical\" to avoid duplicate content.",
@@ -139,6 +148,7 @@ export default [
     "tags": ["all", "Meta tag"]
   },
   {
+    "id": "head__language-attribute",
     "title": "Language attribute",
     "priority": "High",
     "description": "The <code>lang</code> attribute of your website is specified and related to the language of the current page.",
@@ -146,6 +156,7 @@ export default [
     "tags": ["all", "HTML tag"]
   },
   {
+    "id": "head__direction-attribute",
     "title": "Direction attribute",
     "priority": "Medium",
     "description": "The direction of lecture is specified on the html tag (It can be used on another HTML tag).",
@@ -153,6 +164,7 @@ export default [
     "tags": ["all", "HTML tag"]
   },
   {
+    "id": "head__alternate-language",
     "title": "Alternate language",
     "priority": "Low",
     "description": "The language tag of your website is specified and related to the language of the current page.",
@@ -160,6 +172,7 @@ export default [
     "tags": ["all", "HTML tag"]
   },
   {
+    "id": "head__conditional-comments",
     "title": "Conditional comments",
     "priority": "Low",
     "description": "Conditional comments are present for IE if needed.",
@@ -172,12 +185,14 @@ export default [
     "tags": ["all", "HTML tag"]
   },
   {
+    "id": "head__rss-feed",
     "title": "RSS feed",
     "priority": "Low",
     "description": "If your project is a blog or has articles, an RSS link was provided.",
     "tags": ["all", "HTML tag"]
   },
   {
+    "id": "head__inline-critical-css",
     "title": "Inline critical CSS",
     "priority": "Medium",
     "description": "The inline critical CSS is correctly injected in the HEAD.",
@@ -191,6 +206,7 @@ export default [
     "tags": ["all", "HTML tag", "CSS", "Performance"]
   },
   {
+    "id": "head__css-order",
     "title": "CSS order",
     "priority": "High",
     "description": "All CSS files are loaded before any JavaScript files in the HEAD",
@@ -198,6 +214,7 @@ export default [
     "tags": ["all", "HTML tag"]
   },
   {
+    "id": "head__facebook-open-graph",
     "title": "Facebook Open Graph",
     "priority": "Low",
     "description": "",
@@ -222,6 +239,7 @@ export default [
     "tags": ["all", "Social meta", "testing"]
   },
   {
+    "id": "head__twitter-card",
     "title": "Twitter Card",
     "priority": "Low",
     "description": "",

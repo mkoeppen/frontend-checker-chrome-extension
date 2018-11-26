@@ -17,7 +17,7 @@ class TestListItem {
         
         // checkbox
         var checkboxContainer = document.createElement("label"),
-        checkbox = new Checkbox(this.test.title);
+        checkbox = new Checkbox(this.test.id);
         checkboxContainer.classList = "k-test__checkbox-container";
         checkboxContainer.append(checkbox.generate());
         testContainer.append(checkboxContainer);

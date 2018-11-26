@@ -11,15 +11,15 @@ import WebFontsTests from './tests/webfonts';
 export default class {
     constructor() {
         this.tests = [
-            ...AccessibilityTests,
-            ...CssTests,
-            ...HeadTests,
-            ...HtmlTests,
-            ...ImagesTests,
-            ...JavascriptTests,
-            ...PerformanceTests,
-            ...SeoTests,
-            ...WebFontsTests
+            ...AccessibilityTests.map((test) => { test.category = "accessibility"; return test; }),
+            ...CssTests.map((test) => { test.category = "css"; return test; }),
+            ...HeadTests.map((test) => { test.category = "head"; return test; }),
+            ...HtmlTests.map((test) => { test.category = "html"; return test; }),
+            ...ImagesTests.map((test) => { test.category = "images"; return test; }),
+            ...JavascriptTests.map((test) => { test.category = "javascript"; return test; }),
+            ...PerformanceTests.map((test) => { test.category = "performance"; return test; }),
+            ...SeoTests.map((test) => { test.category = "seo"; return test; }),
+            ...WebFontsTests.map((test) => { test.category = "webfonts"; return test; })
         ];
     }
     init() {

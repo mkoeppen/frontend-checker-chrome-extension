@@ -12,7 +12,7 @@ export default class Checkbox {
 
         this.element = document.createElement("div");
         this.element.classList = "k-checkbox__wrapper";
-        this.element.innerHTML = `<input type="checkbox" class="k-checkbox__input" id="${this.id}" /><label class="k-checkbox" for="${this.id}"></label>`;
+        this.element.innerHTML = `<input type="checkbox" class="k-checkbox__input" id="${this.id}" name="${this.name}"/><label class="k-checkbox" for="${this.id}"></label>`;
 
         return this.element;
     }

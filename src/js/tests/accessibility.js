@@ -1,5 +1,6 @@
 export default [
   {
+    "id": "accessibility__progressive-enhancement",
     "title": "Progressive enhancement",
     "priority": "Medium",
     "description": "Major functionality like main navigation and search should work without JavaScript enabled.",
@@ -12,6 +13,7 @@ export default [
     "tags": ["all", "best practices"]
   },
   {
+    "id": "accessibility__color-contrast",
     "title": "Color contrast",
     "priority": "Medium",
     "description": "Color contrast should at least pass WCAG AA (AAA for mobile).",
@@ -24,12 +26,14 @@ export default [
     "tags": ["all", "best practices"]
   },
   {
+    "id": "accessibility__h1",
     "title": "H1",
     "priority": "High",
     "description": "All pages have an H1 which is not the title of the website.",
     "tags": ["all", "best practices", "seo"]
   },
   {
+    "id": "accessibility__headings",
     "title": "Headings",
     "priority": "High",
     "description": "Headings should be used properly and in the right order (H1 to H6).",
@@ -42,6 +46,7 @@ export default [
     "tags": ["all", "best practices"]
   },
   {
+    "id": "accessibility__html5-input-types",
     "title": "Specific HTML5 input types are used",
     "priority": "Medium",
     "description": "This is especially important for mobile devices that show customized keypads and widgets for different types.",
@@ -54,6 +59,7 @@ export default [
     "tags": ["all"]
   },
   {
+    "id": "accessibility__label",
     "title": "Label",
     "priority": "High",
     "description": "A label is associated with each input form element. In case a label can't be displayed, use aria-label instead.",
@@ -66,6 +72,7 @@ export default [
     "tags": ["all"]
   },
   {
+    "id": "accessibility__wave-tool-test",
     "title": "Accessibility standards testing",
     "priority": "High",
     "description": "Use the WAVE tool to test if your page respects the accessibility standards.",
@@ -78,12 +85,14 @@ export default [
     "tags": ["all", "testing"]
   },
   {
+    "id": "accessibility__keyboard-navigation",
     "title": "Keyboard navigation",
     "priority": "High",
     "description": "Test your website using only your keyboard in a previsible order. All interactive elements are reachable and usable.",
     "tags": ["all", "testing"]
   },
   {
+    "id": "accessibility__screen-reader",
     "title": "Screen reader",
     "priority": "Medium",
     "description": "All pages were tested in two or more screen readers (such as JAWS, VoiceOver, and NVDA).",
@@ -96,6 +105,7 @@ export default [
      "tags": ["all", "testing"]
   },
   {
+    "id": "accessibility__focus-style",
     "title": "Focus style",
     "priority": "High",
     "description": "If the focus is disabled, it is replaced by visible state in CSS.",
