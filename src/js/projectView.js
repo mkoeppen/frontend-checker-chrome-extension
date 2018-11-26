@@ -30,7 +30,7 @@ export default class ProjectList {
                 
         // init project list        
         this.toolbar = document.createElement("div");
-        this.toolbar.classList.add("k-project-list");
+        this.toolbar.classList.add("k-project-list__controls");
         this.element.append(this.toolbar);
 
         var newProjectButton = document.createElement("button");
@@ -38,7 +38,7 @@ export default class ProjectList {
         newProjectButton.innerHTML = "+";
         newProjectButton.addEventListener("click", () => {
             this.projectHandler.initNewProject((project) => {
-                this.initProjectDetails(project, true);
+                this.initProjectDetails(project);
             });      
         })
         this.toolbar.append(newProjectButton);
@@ -48,45 +48,50 @@ export default class ProjectList {
 
         return this.element;
     }
-    initProjectDetails(project, editmode) {
+    initProjectDetails(project) {
         project = project || {};
 
         jsHelper.empty(this.projectDetailsElement);
+        this.element.classList.add("k-editmode");
 
-        if(editmode) {
-            var formElement = document.createElement("form");
-            formElement.classList.add("k-form");
-            formElement.classList.add("k-project-details-form");
-            formElement.innerHTML = `
-                <input name="id" type="hidden" value="${project.id || ""}">
-                <div class="k-form__row"><label for="name">Name:</label><input id="name" name="name" type="text" value="${project.name || ""}"></div>
-                <div class="k-form__row"><label for="blacklistUrls">Blacklist Urls:</label><textarea id="blacklistUrls" name="blacklistUrls">${project.blacklistUrls || ""}</textarea></div>
-                <div class="k-form__row"><label for="whitelistUrls">Whitelist Urls:</label><textarea id="whitelistUrls" name="whitelistUrls">${project.whitelistUrls || ""}</textarea></div>
-                <div class="k-form__row k-form__row--center"><button class="k-button" type="submit">Save</button></div>
-            `;
-            formElement.addEventListener("submit", (e) => {
-                e.preventDefault();
+        var formElement = document.createElement("form");
+        formElement.classList.add("k-form");
+        formElement.classList.add("k-project-details-form");
+        formElement.innerHTML = `
+            <input name="id" type="hidden" value="${project.id || ""}">
+            <div class="k-form__row"><label for="name">Name:</label><input id="name" name="name" type="text" value="${project.name || ""}"></div>
+            <div class="k-form__row"><label for="blacklistUrls">Blacklist Urls:</label><textarea id="blacklistUrls" name="blacklistUrls">${project.blacklistUrls || ""}</textarea></div>
+            <div class="k-form__row"><label for="whitelistUrls">Whitelist Urls:</label><textarea id="whitelistUrls" name="whitelistUrls">${project.whitelistUrls || ""}</textarea></div>
+            <div class="k-form__row k-form__row--center">
+                <button class="k-button k-project-details__cancel-button" type="button">Cancel</button>
+                <button class="k-button" type="submit">Save</button>
+            </div>
+        `;
+        formElement.addEventListener("submit", (e) => {
+            e.preventDefault();
 
-                var currentForm = e.target;
-                var project = {
-                    id: currentForm.querySelector("input[name='id']").value,
-                    name: currentForm.querySelector("input[name='name']").value,
-                    blacklistUrls: currentForm.querySelector("textarea[name='blacklistUrls']").value,
-                    whitelistUrls: currentForm.querySelector("textarea[name='whitelistUrls']").value,
-                }
+            var currentForm = e.target;
+            var project = {
+                id: currentForm.querySelector("input[name='id']").value,
+                name: currentForm.querySelector("input[name='name']").value,
+                blacklistUrls: currentForm.querySelector("textarea[name='blacklistUrls']").value,
+                whitelistUrls: currentForm.querySelector("textarea[name='whitelistUrls']").value,
+            }
 
-                this.projectHandler.saveProjectAsync(project, {}).then(() => {
-                    this.refreshProjectList();
-                    jsHelper.empty(this.projectDetailsElement);
-                });
+            this.projectHandler.saveProjectAsync(project, {}).then(() => {
+                this.refreshProjectList();
+                jsHelper.empty(this.projectDetailsElement);                    
+                this.element.classList.remove("k-editmode");
+            });
 
-                return false;
-            })
+            return false;
+        });
+        formElement.querySelector(".k-project-details__cancel-button").addEventListener("click", (e) => {
+            jsHelper.empty(this.projectDetailsElement);                    
+            this.element.classList.remove("k-editmode");
+        })
 
-            this.projectDetailsElement.append(formElement);
-        } else {
-
-        }
+        this.projectDetailsElement.append(formElement);
     }
     refreshProjectList() {
 
@@ -114,8 +119,29 @@ export default class ProjectList {
                             this.refreshProjectList();
                         });
                     });
+
+                projectElement
+                    .querySelector(".k-project__edit-button")
+                    .addEventListener("click", (e) => {
+                        this.onClickEditmode(e);
+                    });
+
+                projectElement
+                    .addEventListener("dblclick", (e) => {
+                        this.onClickEditmode(e);
+                    });
             });
         });
+    }
+    onClickEditmode(e) {
+        var projectElement = e.target.closest(".k-project"),
+            projectId = projectElement.getAttribute("data-project-id");
+
+        var project = this.projectHandler.getProjectWithId(projectId);
+
+        if(project) {
+            this.initProjectDetails(project);
+        }
     }
     
 }

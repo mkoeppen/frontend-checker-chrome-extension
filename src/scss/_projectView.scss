@@ -1,11 +1,26 @@
 .k-project-details {
     padding: 20px;
+    display: none;
+
+    .k-projects.k-editmode & {
+        display: block;
+    }
 }
 
 .k-project-list {
     padding: 0;
     list-style-type: none;
     margin: 0;
+
+    .k-projects.k-editmode & {
+        display: none;
+    }
+}
+
+.k-project-list__controls {
+    .k-projects.k-editmode & {
+        display: none;
+    }
 }
 
 .k-project {

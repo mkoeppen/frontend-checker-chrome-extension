@@ -63,6 +63,13 @@ export default class ProjectHandler {
             });
         });
     }
+    getProjectWithId(id) {
+        var project = this.projectList.filter((p) => {
+            return p.id === id;
+        });
+
+        return project.length > 0 ? project[0] : undefined
+    }
     initNewProject(callback) {
         chrome.tabs.getSelected(null, (tab) => {
             var id = jsHelper.guid();
@@ -82,6 +89,9 @@ export default class ProjectHandler {
     saveProjectAsync(project, state) {
         return new Promise((resolve, reject) => {
             this.loadProjectListAsync().then(() => {
+                this.projectList = this.projectList.filter((p) => {
+                    return p.id !== project.id;
+                });
                 this.projectList.push(project);
                 Promise.all([
                     this.saveProjectListAsync(), 
