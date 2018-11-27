@@ -1,0 +1,81 @@
+.k-switch {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #999999;
+  border-radius: 20px;
+
+  &__wrapper {
+    position: relative;
+    width: 70px;
+    -webkit-user-select: none;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+
+    &:before,
+    &:after {
+      display: block;
+      float: left;
+      width: 50%;
+      height: 21px;
+      padding: 0;
+      line-height: 21px;
+      font-size: 14px;
+      color: white;
+      font-family: Trebuchet, Arial, sans-serif;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    &:before {
+      content: "ON";
+      padding-left: 8px;
+      background-color: #FFC400;
+      color: #FFFFFF;
+    }
+
+    &:after {
+      content: "OFF";
+      padding-right: 8px;
+      background-color: #FFFFFF;
+      color: #999999;
+      text-align: right;
+    }
+
+
+  }
+
+
+  &__switch {
+    display: block;
+    width: 10px;
+    margin: 5.5px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 45px;
+    border: 2px solid #999999;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+  }
+}
+
+
+
+.k-switch__input:checked+.k-switch .k-switch__inner {
+  margin-left: 0;
+}
+
+.k-switch__input:checked+.k-switch .k-switch__switch {
+  right: 0px;
+}
