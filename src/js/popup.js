@@ -8,19 +8,18 @@ import ProjectView from './projectView';
 
 class Popup {
     constructor(popupElement) {
-        this.tester = undefined;
+        this.tester = new Tester();
         this.popup = popupElement;
         this.tabStrip = undefined;
         this.automatedTestsList = document.querySelector(".k-automated-tests")
         this.manualTestsList = document.querySelector(".k-manual-tests")
-        this.projectHandler = new ProjectHandler();
+        this.projectHandler = new ProjectHandler(this.tester);
     }
     init() {        
         this.initTester();
         this.initTabStrip();
     }
     initTester() {        
-        this.tester = new Tester();
         this.tester.init();
     }
     initTabStrip() { 
@@ -54,7 +53,7 @@ class Popup {
                     title: "Projects",
                     classList: "k-projects",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
-                        contentElement.append(new ProjectView(this.projectHandler).generate());
+                        contentElement.append(new ProjectView(this.projectHandler, this.tester).generate());
                     }
                 }
             ]

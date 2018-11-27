@@ -1,14 +1,16 @@
 'use strict'
 
 import jsHelper from './jsHelper'
+import TestCategoryList from './testCategoryList';
 
 export default class ProjectList {
-    constructor(projectHandler) {
+    constructor(projectHandler, tester) {
         this.projectHandler = projectHandler;
         this.element = undefined;
         this.projectDetailsElement = undefined;
         this.projectDetailsList = undefined;
         this.toolbar = undefined;
+        this.tester = tester;
     }
     generate() {        
         this.element = document.createElement("div");
@@ -54,6 +56,9 @@ export default class ProjectList {
         jsHelper.empty(this.projectDetailsElement);
         this.element.classList.add("k-editmode");
 
+        /**
+         * Form
+         */
         var formElement = document.createElement("form");
         formElement.classList.add("k-form");
         formElement.classList.add("k-project-details-form");
@@ -90,6 +95,15 @@ export default class ProjectList {
             jsHelper.empty(this.projectDetailsElement);                    
             this.element.classList.remove("k-editmode");
         })
+
+        /**
+         * Tests
+         */
+
+        var formElement = document.createElement("div");
+        formElement.classList.add("k-project-categories");
+
+        formElement.append(new TestCategoryList(this.tester.tests).generate());
 
         this.projectDetailsElement.append(formElement);
     }
