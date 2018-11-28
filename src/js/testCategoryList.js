@@ -8,12 +8,6 @@ class TestListItemForCategories {
     generate() {
         var testContainer = document.createElement("li");
         testContainer.classList = "k-test";
-
-        // state
-        var stateContainer = document.createElement("div");
-        stateContainer.classList = `k-test__state k-test__state--${this.test.priority.toLowerCase()}`;
-        stateContainer.setAttribute("title", this.test.priority);
-        testContainer.append(stateContainer);
         
         // checkbox
         var switchContainer = document.createElement("label"),
@@ -35,14 +29,26 @@ class TestListItemForCategories {
         descriptionContainer.innerHTML = `${this.test.description}`;
         testContainer.append(descriptionContainer);
 
+        // state
+        var priorityContainer = document.createElement("select");
+        priorityContainer.classList = `k-test__state-select k-test__state--${this.test.priority.toLowerCase()}`;
+        priorityContainer.innerHTML = `
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        `;
+        priorityContainer.querySelector(`[value=${this.test.priority}]`).setAttribute("selected", "selected");
+        testContainer.append(priorityContainer);
+
         return testContainer;
     }
 }
 
 class TestCategory {
-    constructor(categoryName, tests) {
+    constructor(categoryName, tests, isActive) {
         this.categoryName = categoryName;
         this.tests = tests;
+        this.isActive = isActive;
     }
     generate() {
         var testCategoryContainer = document.createElement("li");
@@ -51,13 +57,92 @@ class TestCategory {
         // button
         var testCategoryButton = document.createElement("button");
         testCategoryButton.classList = `k-test-category-list__button`;
-        testCategoryButton.setAttribute("title", this.categoryName);
+
+        var categoryFormatedName = "",
+            categoryIconClass = "";
+
+        switch(this.categoryName) {
+            case "accessibility":
+                categoryFormatedName = "Accessibility";
+                categoryIconClass = "fa fa-universal-access";
+            break;
+            
+            case "css":
+                categoryFormatedName = "CSS";
+                categoryIconClass = "fa fa-css3";
+            break;
+            
+            case "head":
+                categoryFormatedName = "HEAD";
+                categoryIconClass = "fa fa-header";
+            break;
+            
+            case "html":
+                categoryFormatedName = "HTML";
+                categoryIconClass = "fa fa-html5";
+            break;
+            
+            case "images":
+                categoryFormatedName = "Images";
+                categoryIconClass = "fa fa-picture-o";
+            break;
+            
+            case "javascript":
+                categoryFormatedName = "JavaScript";
+                categoryIconClass = "fa fa-code";
+            break;
+            
+            case "performance":
+                categoryFormatedName = "Performance";
+                categoryIconClass = "fa fa-area-chart";
+            break;
+            
+            case "seo":
+                categoryFormatedName = "SEO";
+                categoryIconClass = "fa fa-line-chart";
+            break;
+            
+            case "webfonts":
+                categoryFormatedName = "Webfonts";
+                categoryIconClass = "fa fa-font";
+            break;
+
+        }
+
+        testCategoryButton.innerHTML = `<i class="${categoryIconClass}" aria-hidden="true"></i>`;
+        testCategoryButton.setAttribute("title", categoryFormatedName);
         testCategoryContainer.append(testCategoryButton);
         
+        var categoryDetails = document.createElement("div");
+        categoryDetails.classList.add("k-test-category-list__category-details");
+        testCategoryContainer.append(categoryDetails);
+
+        var categoryDetailsHeadline = document.createElement("h2");
+        categoryDetailsHeadline.innerHTML = categoryFormatedName;
+
+        categoryDetails.append(categoryDetailsHeadline);
+
         // tests
         var testsList = document.createElement("ul");
         testsList.classList = "k-test-category-list__tests";
-        testCategoryContainer.append(testsList);
+        categoryDetails.append(testsList);
+
+        testCategoryButton.addEventListener("click", () => {
+            testCategoryContainer.parentElement.querySelectorAll(".k-test-category-list__button.is-active").forEach((element) => {
+                element.classList.remove("is-active");
+            });
+            testCategoryContainer.parentElement.querySelectorAll(".k-test-category-list__category-details.is-active").forEach((element) => {
+                element.classList.remove("is-active");
+            });
+
+            testCategoryButton.classList.add("is-active");
+            categoryDetails.classList.add("is-active");
+        })
+
+        if(this.isActive) {
+            testCategoryButton.classList.add("is-active");
+            categoryDetails.classList.add("is-active");
+        }
 
         this.tests.forEach((test) => {
             testsList.append(new TestListItemForCategories(test).generate())
@@ -87,7 +172,8 @@ export default class TestCategoryList {
 
         for (var categoryName in this.categories) {
             if (this.categories.hasOwnProperty(categoryName)) {
-                this.element.append(new TestCategory(categoryName, this.categories[categoryName]).generate());
+                var isActive = categoryName === "accessibility";
+                this.element.append(new TestCategory(categoryName, this.categories[categoryName], isActive).generate());
             }
         }
 

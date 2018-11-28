@@ -12,6 +12,9 @@ export default class ProjectList {
         this.toolbar = undefined;
         this.tester = tester;
     }
+    initProjectDetailsMenu() {
+        
+    }
     generate() {        
         this.element = document.createElement("div");
         this.element.classList.add("k-projects");
@@ -95,17 +98,19 @@ export default class ProjectList {
             jsHelper.empty(this.projectDetailsElement);                    
             this.element.classList.remove("k-editmode");
         })
+        this.projectDetailsElement.append(formElement);
+
 
         /**
          * Tests
          */
 
-        var formElement = document.createElement("div");
-        formElement.classList.add("k-project-categories");
+        var categoryListElement = document.createElement("div");
+        categoryListElement.classList.add("k-project-categories");
 
-        formElement.append(new TestCategoryList(this.tester.tests).generate());
+        categoryListElement.append(new TestCategoryList(this.tester.tests).generate());
 
-        this.projectDetailsElement.append(formElement);
+        this.projectDetailsElement.append(categoryListElement);
     }
     refreshProjectList() {
 
