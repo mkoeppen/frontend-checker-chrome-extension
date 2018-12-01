@@ -99,7 +99,6 @@ export default class ProjectHandler {
                     whitelistUrls: whitelistUrl
                 },
                 state: {
-                    disabledTests: [],
                     testOverwrites: []
                 }
             });

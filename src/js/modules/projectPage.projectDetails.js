@@ -147,7 +147,7 @@ export default class ProjectDetails {
             testConfig.isActive = isActive;
 
             state.testOverwrites = (state.testOverwrites || []).filter((testOverwrite) => {
-                return testOverwrite.id === testId;
+                return testOverwrite.id !== testId;
             });
 
             state.testOverwrites.push(testConfig);

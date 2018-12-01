@@ -15,7 +15,7 @@ class TestListItem {
         testContainer.append(controlsContainer);
         
         // checkbox
-        var switchCheckbox = new Switch(this.test.id, this.test.isActive, (state) => {
+        var switchCheckbox = new Switch(this.test.id, (typeof this.test.isActive !== "undefined" ? this.test.isActive : true), (state) => {
             document.dispatchEvent(new CustomEvent('project-details-change-test-active', { 
                 detail: {
                     testId: this.test.id,
