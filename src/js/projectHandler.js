@@ -162,4 +162,29 @@ export default class ProjectHandler {
             });   
         });     
     }
+    checkMatchingProject(url) {
+        return new Promise((resolve, reject) => {
+            this.loadProjectListAsync().then(() => {
+                var project = this.projectList.find((p) => {
+
+                    var matchingWhitelistRegex = (p.whitelistUrls || "").split("\n").find((regex) => {
+                        return RegExp(regex).test(url);
+                    });
+
+                    var matchingBlacklistRegex = (p.blacklistUrls || "").split("\n").find((regex) => {
+                        return RegExp(regex).test(url);
+                    });
+
+                    console.log(matchingWhitelistRegex);
+                    console.log(matchingBlacklistRegex);
+
+                    return matchingWhitelistRegex && !matchingBlacklistRegex;
+                });
+
+                console.table(project);
+
+                resolve(project);
+            });   
+        });     
+    }
 }

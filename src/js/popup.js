@@ -15,9 +15,16 @@ class Popup {
         this.manualTestsList = document.querySelector(".k-manual-tests")
         this.projectHandler = new ProjectHandler(this.testHandler);
     }
-    init() {        
-        this.initTestHandler();
-        this.initTabStrip();
+    init() {   
+        chrome.tabs.getSelected(null, (tab) => {
+            var url = tab.url;
+            this.projectHandler.checkMatchingProject(url).then((data) => {
+                console.table(data);
+                this.initTestHandler();
+                this.initTabStrip();
+            });
+
+        });
     }
     initTestHandler() {        
         this.testHandler.init();

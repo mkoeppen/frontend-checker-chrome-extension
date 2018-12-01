@@ -4,10 +4,6 @@
 
 ## Next Version
 - project handling
-    - initProjectDetailsMenu
-    - configure tests for projects
-        - save test config
-        - change priority / disable Tests
     - load project with whitelist and Blacklist
     - show current Matching projects
 - Show status in popup
