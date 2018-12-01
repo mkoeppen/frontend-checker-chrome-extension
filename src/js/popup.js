@@ -16,10 +16,10 @@ class Popup {
         this.projectHandler = new ProjectHandler(this.testHandler);
     }
     init() {        
-        this.inittestHandler();
+        this.initTestHandler();
         this.initTabStrip();
     }
-    inittestHandler() {        
+    initTestHandler() {        
         this.testHandler.init();
     }
     initTabStrip() { 

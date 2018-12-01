@@ -1,7 +1,7 @@
 'use strict'
 import Switch from './switch'
 
-class TestListItemForCategories {
+class TestListItem {
     constructor(test) {
         this.test = test;
     }
@@ -9,12 +9,35 @@ class TestListItemForCategories {
         var testContainer = document.createElement("li");
         testContainer.classList = "k-test";
         
+        // controls        
+        var controlsContainer = document.createElement("div");
+        controlsContainer.classList = "k-test__controls";
+        testContainer.append(controlsContainer);
+        
         // checkbox
-        var switchContainer = document.createElement("label"),
-        switchCheckbox = new Switch(this.test.id);
-        switchContainer.classList = "k-test__checkbox-container";
+        var switchCheckbox = new Switch(this.test.id, this.test.isActive, (state) => {
+            document.dispatchEvent(new CustomEvent('project-details-change-test-active', { 
+                detail: {
+                    testId: this.test.id,
+                    isActive: state
+                }
+            }));
+        });
+        var switchContainer = document.createElement("label");
+        switchContainer.classList = "k-test__switch-container";
         switchContainer.append(switchCheckbox.generate());
-        testContainer.append(switchContainer);
+        controlsContainer.append(switchContainer);
+
+        // state
+        var priorityContainer = document.createElement("select");
+        priorityContainer.classList = `k-test__state-select k-test__state--${this.test.priority.toLowerCase()}`;
+        priorityContainer.innerHTML = `
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        `;
+        priorityContainer.querySelector(`[value=${this.test.priority}]`).setAttribute("selected", "selected");
+        controlsContainer.append(priorityContainer);
 
         // title
         var titleContainer = document.createElement("label");
@@ -29,48 +52,43 @@ class TestListItemForCategories {
         descriptionContainer.innerHTML = `${this.test.description}`;
         testContainer.append(descriptionContainer);
 
-        // state
-        var priorityContainer = document.createElement("select");
-        priorityContainer.classList = `k-test__state-select k-test__state--${this.test.priority.toLowerCase()}`;
-        priorityContainer.innerHTML = `
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-        `;
-        priorityContainer.querySelector(`[value=${this.test.priority}]`).setAttribute("selected", "selected");
-        testContainer.append(priorityContainer);
-
         return testContainer;
     }
 }
 
 export default class ProjectTestList {
-    constructor(categoryName, tests) {
+    constructor(project, state, categoryName, tests) {
+        this.project = project;
+        this.state = state;
+        this.element = undefined;
         this.categoryName = categoryName;
         this.tests = tests;
     }
     generate() {
-        var testCategoryContainer = document.createElement("li");
-        testCategoryContainer.classList = "k-test";
      
-        var categoryDetails = document.createElement("div");
-        categoryDetails.classList.add("k-test-category-list__category-details");
-        testCategoryContainer.append(categoryDetails);
+        this.element = document.createElement("div");
+        this.element.classList.add("k-test-category-list__category-details");
 
         var categoryDetailsHeadline = document.createElement("h2");
         categoryDetailsHeadline.innerHTML = this.categoryName;
 
-        categoryDetails.append(categoryDetailsHeadline);
+        this.element.append(categoryDetailsHeadline);
 
         // tests
         var testsList = document.createElement("ul");
         testsList.classList = "k-test-category-list__tests";
-        categoryDetails.append(testsList);
+        this.element.append(testsList);
 
         this.tests.forEach((test) => {
-            testsList.append(new TestListItemForCategories(test).generate())
+            var overwrites = (this.state.testOverwrites || []).find((testOverwrite) => { return testOverwrite.id === test.id; }) || {};
+            
+            var mergedTestConfig = {...test, ...overwrites, ...{ 
+                isActive: this.state.disabledTests ? this.state.disabledTests.indexOf(test.id) < 0 : true
+            }};
+            
+            testsList.append(new TestListItem(mergedTestConfig).generate());
         });
 
-        return testCategoryContainer;
+        return this.element;
     }
 }

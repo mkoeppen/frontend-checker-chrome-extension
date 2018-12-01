@@ -7,3 +7,56 @@
 .k-test-category-list .k-test {
     padding: 0;
 }
+
+.k-test-category-list__tests {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+    overflow: auto;
+    height: 100%;
+}
+
+.k-test-category-list__category-details h2 {
+    color: white;
+    background: #717171;
+    margin: 0;
+    padding: 10px 20px;
+    height: 40px;
+    display: block;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    margin-top: -40px;
+}
+.k-test-category-list__category-details {
+    height: 100%;
+    padding-top: 40px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.k-test-category-list__tests .k-test {
+    padding-left: 16px;
+    padding-right: 80px;
+    position: relative;
+}
+
+.k-test-category-list__tests .k-test__controls {
+    float: right;
+    width: 80px;
+    margin-right: -80px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.k-test__controls .k-test__switch-container {
+    margin-bottom: 5px;
+    display: block;
+    float: right;
+}
+
+.k-test-category-list__tests .k-test__state-select {
+    font-size: 12px;
+    float: right;
+}

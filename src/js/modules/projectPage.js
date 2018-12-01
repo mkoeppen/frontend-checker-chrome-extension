@@ -50,13 +50,20 @@ export default class ProjectPage {
             this.projectList.refresh()
         });
     }
-    onEditProject(project) {
-        this.element.classList.add("k-editmode");
-        this.projectDetails.initProject(project);
+    onEditProject(project, state) {
+        if(!state) {
+            this.projectHandler.loadProjectStateAsync(project.id).then((state) => {
+                this.element.classList.add("k-editmode");
+                this.projectDetails.initProject(project, state);
+            });
+        } else {            
+            this.element.classList.add("k-editmode");
+            this.projectDetails.initProject(project, state);
+        }
     }
     onNewProject() {
-        this.projectHandler.initNewProject((project) => {
-            this.onEditProject(project);
+        this.projectHandler.initNewProject((newConfig) => {
+            this.onEditProject(newConfig.project, newConfig.state);
         });
     }
     onEditCancelProject() {
@@ -65,8 +72,11 @@ export default class ProjectPage {
         this.element.classList.remove("k-editmode");
     }
     onSaveProject(project) {
-        this.projectHandler.saveProjectAsync(project, {}).then(() => {
+        this.projectHandler.saveProjectAsync(project).then(() => {
             this.onEditCancelProject();
         });
+    }
+    onSaveProjectState(projectId, state) {
+        this.projectHandler.saveProjectStateAsync(projectId, state);
     }
 }

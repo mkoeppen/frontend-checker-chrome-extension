@@ -71,7 +71,7 @@ export default class ProjectList {
         jsHelper.empty(this.projectDetailsList);
 
         this.projectHandler.loadProjectListAsync().then((projectList) => {
-            projectList.forEach(project => {
+            (projectList || []).forEach(project => {
                 this.projectDetailsList.append(new ProjectListItem(project).generate());
             });
         });

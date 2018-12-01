@@ -10,6 +10,7 @@ export default class ProjectDetails {
         this.element = undefined;
         this.detailsContent = undefined;
         this.project = undefined;
+        this.state = undefined;
         this.projectHandler = projectHandler;
         this.testHandler = testHandler;
         this.menuItems = [
@@ -77,8 +78,9 @@ export default class ProjectDetails {
 
         return this.element;
     }
-    initProject(project) {
+    initProject(project, state) {
         this.project = project || {};
+        this.state = state || {};
         this.clear();
 
         // header
@@ -89,7 +91,7 @@ export default class ProjectDetails {
         // stop editmode button
         var stopEditModeButton = document.createElement("button");
         stopEditModeButton.classList.add("k-project-details__stop-editmode-button");
-        stopEditModeButton.innerHTML = "<";
+        stopEditModeButton.innerHTML = '<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>';
         stopEditModeButton.addEventListener('click', () => {
             document.dispatchEvent(new CustomEvent('project-edit-cancel'));
         });
@@ -114,18 +116,42 @@ export default class ProjectDetails {
             this.onChangeContentPage(e.detail);
         });
 
+        document.addEventListener('project-details-change-test-active', (e) => {
+            this.onChangeTestActive(e.detail.testId, e.detail.isActive);
+        });
+
         this.menu.setActive(this.menuItems[0]);
     }
     onChangeContentPage(menuItem) {
         jsHelper.empty(this.detailsContent);
 
         if(menuItem && typeof menuItem.initFunc === "function") {
-            this.detailsContent.append(menuItem.initFunc(this.project));  
+            this.detailsContent.append(menuItem.initFunc(this.project, this.state));  
         } else if(menuItem) {            
-            this.detailsContent.append(new ProjectTestList(menuItem.tabName, this.testHandler.tests.filter((test) => {
+            this.detailsContent.append(new ProjectTestList(this.project, this.state, menuItem.tabName, this.testHandler.tests.filter((test) => {
                 return test.category === menuItem.tabName;
             })).generate());
         }
+    }
+    onChangeTestActive(testId, isActive) {
+        this.projectHandler.loadProjectStateAsync(this.project.id).then((state) => {
+
+            state = state || {};
+            var disabledTests = state.disabledTests || [];
+
+            var index = disabledTests.indexOf(testId);
+            if (index > -1) {
+                disabledTests = disabledTests.splice(index, 1);
+            }
+
+            if(!isActive) {
+                disabledTests.push(testId);
+            }
+
+            state.disabledTests = disabledTests;
+
+            this.projectHandler.saveProjectStateAsync(this.project.id, state);
+        });
     }
     clear() {
         jsHelper.empty(this.element);

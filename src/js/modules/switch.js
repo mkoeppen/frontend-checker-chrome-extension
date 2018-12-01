@@ -3,10 +3,12 @@
 import jsHelper from '../jsHelper'
 
 export default class Switch {
-    constructor(name) {
+    constructor(name, checked, onChange) {
         this.element = undefined;
         this.name = name;
+        this.checked = checked;
         this.id = jsHelper.guid();
+        this.onChange = onChange;
     }
     generate() {
 
@@ -17,6 +19,14 @@ export default class Switch {
                                         <span class="k-switch__inner"></span>
                                         <span class="k-switch__switch"></span>
                                     </label>`;
+
+        this.element.querySelector("input").addEventListener("change", (e) => {
+            this.onChange(e.currentTarget.checked);
+        });
+
+        if(this.checked) {
+            this.element.querySelector("input").setAttribute("checked", "checked");
+        }
 
         return this.element;
     }

@@ -22,6 +22,19 @@ export default class ProjectHandler {
             });
         });
     }
+    loadProjectStateAsync(projectId) {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get([`project_state_${projectId}`], (result) => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    console.log('Value currently is ' + result[`project_state_${projectId}`]);
+                    resolve(result[`project_state_${projectId}`] || {});
+                }
+            });
+        });
+    }
     saveProjectListAsync() {
         var that = this;
         return new Promise((resolve, reject) => {
@@ -79,24 +92,27 @@ export default class ProjectHandler {
             var whitelistUrl = protocol + '//' + host.replace("/", "\/").replace(".", "\.") + "/.*";
 
             callback({
-                id: id,
-                name: host,
-                blacklistUrls: "",
-                whitelistUrls: whitelistUrl
+                project: {
+                    id: id,
+                    name: host,
+                    blacklistUrls: "",
+                    whitelistUrls: whitelistUrl
+                },
+                state: {
+                    disabledTests: [],
+                    testOverwrites: []
+                }
             });
         });
     }
-    saveProjectAsync(project, state) {
+    saveProjectAsync(project) {
         return new Promise((resolve, reject) => {
             this.loadProjectListAsync().then(() => {
                 this.projectList = this.projectList.filter((p) => {
                     return p.id !== project.id;
                 });
                 this.projectList.push(project);
-                Promise.all([
-                    this.saveProjectListAsync(), 
-                    this.saveProjectStateAsync(project.id, state)
-                ]).then(() => {
+                this.saveProjectListAsync().then(() => {
                     resolve();
                 })
             });   

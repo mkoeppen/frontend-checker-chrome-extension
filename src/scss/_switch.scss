@@ -1,76 +1,73 @@
+.k-switch__wrapper {
+  position: relative;
+  width: 50px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.k-switch__input {
+  display: none;
+}
+
 .k-switch {
   display: block;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #999999;
+  border: 2px solid #707070;
   border-radius: 20px;
-
-  &__wrapper {
-    position: relative;
-    width: 70px;
-    -webkit-user-select: none;
-  }
-
-  &__input {
-    display: none;
-  }
-
-  &__inner {
-    display: block;
-    width: 200%;
-    margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
-
-    &:before,
-    &:after {
-      display: block;
-      float: left;
-      width: 50%;
-      height: 21px;
-      padding: 0;
-      line-height: 21px;
-      font-size: 14px;
-      color: white;
-      font-family: Trebuchet, Arial, sans-serif;
-      font-weight: bold;
-      box-sizing: border-box;
-    }
-
-    &:before {
-      content: "ON";
-      padding-left: 8px;
-      background-color: #FFC400;
-      color: #FFFFFF;
-    }
-
-    &:after {
-      content: "OFF";
-      padding-right: 8px;
-      background-color: #FFFFFF;
-      color: #999999;
-      text-align: right;
-    }
-
-
-  }
-
-
-  &__switch {
-    display: block;
-    width: 10px;
-    margin: 5.5px;
-    background: #FFFFFF;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 45px;
-    border: 2px solid #999999;
-    border-radius: 20px;
-    transition: all 0.3s ease-in 0s;
-  }
 }
 
+.k-switch__inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
 
+.k-switch__inner:before,
+.k-switch__inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 16px;
+  padding: 0;
+  line-height: 16px;
+  font-size: 10px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.k-switch__inner:before {
+  content: "ON";
+  padding-left: 5px;
+  background-color: #FF9203;
+  color: #FFFFFF;
+}
+
+.k-switch__inner:after {
+  content: "OFF";
+  padding-right: 5px;
+  background-color: #EEEEEE;
+  color: #999999;
+  text-align: right;
+}
+
+.k-switch__switch {
+  display: block;
+  width: 5px;
+  margin: 5.5px;
+  background: #FFFFFF;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 30px;
+  border: 2px solid #707070;
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
 
 .k-switch__input:checked+.k-switch .k-switch__inner {
   margin-left: 0;
