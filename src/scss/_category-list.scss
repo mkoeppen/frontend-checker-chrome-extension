@@ -7,11 +7,3 @@
 .k-test-category-list .k-test {
     padding: 0;
 }
-
-.k-test-category-list__category-details {
-    display: none;
-
-    &.is-active {
-        display: block;
-    }
-}

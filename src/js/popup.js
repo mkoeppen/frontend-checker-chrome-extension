@@ -4,7 +4,7 @@ import Tester from './tester'
 import TabStrip from './tabStrip'
 import TestList from './testList'
 import ProjectHandler from './projectHandler';
-import ProjectView from './projectView';
+import ProjectPage from './pages/projectPage';
 
 class Popup {
     constructor(popupElement) {
@@ -53,7 +53,7 @@ class Popup {
                     title: "Projects",
                     classList: "k-projects",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
-                        contentElement.append(new ProjectView(this.projectHandler, this.tester).generate());
+                        contentElement.append(new ProjectPage(this.projectHandler, this.tester).generate());
                     }
                 }
             ]
