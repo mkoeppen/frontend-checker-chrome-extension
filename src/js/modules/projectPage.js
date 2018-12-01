@@ -4,12 +4,12 @@ import ProjectList from './projectPage.projectList';
 import ProjectDetails from './projectPage.projectDetails';
 
 export default class ProjectPage {
-    constructor(projectHandler, tester) {
+    constructor(projectHandler, testHandler) {
         this.element = undefined;
         this.projectList = undefined;
         this.projectDetails = undefined;
         this.projectHandler = projectHandler;
-        this.tester = tester;
+        this.testHandler = testHandler;
     }
     generate() {        
         this.element = document.createElement("div");
@@ -19,7 +19,7 @@ export default class ProjectPage {
         this.element.append(this.projectList.generate());
         this.projectList.refresh()
 
-        this.projectDetails = new ProjectDetails(this.projectHandler, this.tester);
+        this.projectDetails = new ProjectDetails(this.projectHandler, this.testHandler);
         this.element.append(this.projectDetails.generate());
 
         document.addEventListener('project-delete', (e) => {

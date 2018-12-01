@@ -1,6 +1,6 @@
 'use strict'
 
-import jsHelper from './jsHelper'
+import jsHelper from '../jsHelper'
 
 export default class TabStrip {
     constructor(element, options) {

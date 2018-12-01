@@ -39,7 +39,7 @@ class TestListItem {
     }
 }
 
-export default class TestList {
+export default class TestListPage {
     constructor(tests) {
         this.element = undefined;
         this.tests = tests;

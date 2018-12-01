@@ -6,12 +6,12 @@ import ProjectTestList from './projectPage.projectTestList'
 import ProjectSettings from './projectPage.projectSettings'
 
 export default class ProjectDetails {
-    constructor(projectHandler, tester) {
+    constructor(projectHandler, testHandler) {
         this.element = undefined;
         this.detailsContent = undefined;
         this.project = undefined;
         this.projectHandler = projectHandler;
-        this.tester = tester;
+        this.testHandler = testHandler;
         this.menuItems = [
             {
                 tabName: "project",
@@ -122,7 +122,7 @@ export default class ProjectDetails {
         if(menuItem && typeof menuItem.initFunc === "function") {
             this.detailsContent.append(menuItem.initFunc(this.project));  
         } else if(menuItem) {            
-            this.detailsContent.append(new ProjectTestList(menuItem.tabName, this.tester.tests.filter((test) => {
+            this.detailsContent.append(new ProjectTestList(menuItem.tabName, this.testHandler.tests.filter((test) => {
                 return test.category === menuItem.tabName;
             })).generate());
         }
