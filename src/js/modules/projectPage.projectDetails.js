@@ -120,6 +120,10 @@ export default class ProjectDetails {
             this.onChangeTestActive(e.detail.testId, e.detail.isActive);
         });
 
+        document.addEventListener('project-details-change-test-priority', (e) => {
+            this.onChangeTestPriority(e.detail.testId, e.detail.priority);
+        });
+
         this.menu.setActive(this.menuItems[0]);
     }
     onChangeContentPage(menuItem) {
@@ -134,25 +138,15 @@ export default class ProjectDetails {
         }
     }
     onChangeTestActive(testId, isActive) {
-        this.projectHandler.loadProjectStateAsync(this.project.id).then((state) => {
-
-            state = state || {  };
-
-
-            var testConfig = (state.testOverwrites || []).find((testOverwrite) => {
-                return testOverwrite.id === testId;
-            }) || { 
-                id: testId
-            };
-            testConfig.isActive = isActive;
-
-            state.testOverwrites = (state.testOverwrites || []).filter((testOverwrite) => {
-                return testOverwrite.id !== testId;
-            });
-
-            state.testOverwrites.push(testConfig);
-
-            this.projectHandler.saveProjectStateAsync(this.project.id, state);
+        this.projectHandler.adjustProjectTestConfigAsync(this.project.id, testId, (state) => {
+            state.isActive = isActive;
+            return state;
+        });
+    }
+    onChangeTestPriority(testId, priority) {
+        this.projectHandler.adjustProjectTestConfigAsync(this.project.id, testId, (state) => {
+            state.priority = priority;
+            return state;
         });
     }
     clear() {

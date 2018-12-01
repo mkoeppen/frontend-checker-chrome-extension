@@ -50,6 +50,12 @@ export default class ProjectHandler {
         });
     }
     saveProjectStateAsync(projectId, state) {
+
+        state = state || {};              
+        state.testOverwrites = (state.testOverwrites || []).filter((test) => {
+            return typeof (test || {}).id === "string";
+        });
+
         return new Promise((resolve, reject) => {
             var stateObject = {};
             stateObject[`project_state_${projectId}`] = state;
@@ -61,6 +67,30 @@ export default class ProjectHandler {
                     console.log('Value is set to ' + stateObject);
                     resolve();
                 }
+            });
+        });
+    }
+    adjustProjectTestConfigAsync(projectId, testId, adjustStateFunc) {
+        return new Promise((resolve, reject) => {
+            this.loadProjectStateAsync(projectId).then((state) => {
+
+                state = state || {};
+
+                var testConfig = (state.testOverwrites || []).find((testOverwrite) => {
+                    return testOverwrite.id === testId;
+                }) || { 
+                    id: testId
+                };
+
+                state.testOverwrites = (state.testOverwrites || []).filter((testOverwrite) => {
+                    return testOverwrite.id !== testId;
+                });
+
+                state.testOverwrites.push(adjustStateFunc(testConfig));
+
+                this.saveProjectStateAsync(projectId, state).then(() => {
+                    resolve();
+                });
             });
         });
     }

@@ -38,6 +38,14 @@ class TestListItem {
         `;
         priorityContainer.querySelector(`[value=${this.test.priority}]`).setAttribute("selected", "selected");
         controlsContainer.append(priorityContainer);
+        priorityContainer.addEventListener('change', (e) => {
+            document.dispatchEvent(new CustomEvent('project-details-change-test-priority', { 
+                detail: {
+                    testId: this.test.id,
+                    priority: e.currentTarget.value
+                }
+            }));
+        })
 
         // title
         var titleContainer = document.createElement("label");
