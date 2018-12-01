@@ -7,6 +7,7 @@
     - load project with whitelist and Blacklist
     - show current Matching projects
 - Show status in popup
+- save project todos
 
 ## Future Versions 
 - project handling
