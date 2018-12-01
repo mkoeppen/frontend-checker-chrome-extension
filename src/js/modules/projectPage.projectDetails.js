@@ -136,19 +136,21 @@ export default class ProjectDetails {
     onChangeTestActive(testId, isActive) {
         this.projectHandler.loadProjectStateAsync(this.project.id).then((state) => {
 
-            state = state || {};
-            var disabledTests = state.disabledTests || [];
+            state = state || {  };
 
-            var index = disabledTests.indexOf(testId);
-            if (index > -1) {
-                disabledTests = disabledTests.splice(index, 1);
-            }
 
-            if(!isActive) {
-                disabledTests.push(testId);
-            }
+            var testConfig = (state.testOverwrites || []).find((testOverwrite) => {
+                return testOverwrite.id === testId;
+            }) || { 
+                id: testId
+            };
+            testConfig.isActive = isActive;
 
-            state.disabledTests = disabledTests;
+            state.testOverwrites = (state.testOverwrites || []).filter((testOverwrite) => {
+                return testOverwrite.id === testId;
+            });
+
+            state.testOverwrites.push(testConfig);
 
             this.projectHandler.saveProjectStateAsync(this.project.id, state);
         });

@@ -82,9 +82,7 @@ export default class ProjectTestList {
         this.tests.forEach((test) => {
             var overwrites = (this.state.testOverwrites || []).find((testOverwrite) => { return testOverwrite.id === test.id; }) || {};
             
-            var mergedTestConfig = {...test, ...overwrites, ...{ 
-                isActive: this.state.disabledTests ? this.state.disabledTests.indexOf(test.id) < 0 : true
-            }};
+            var mergedTestConfig = {...test, ...overwrites};
             
             testsList.append(new TestListItem(mergedTestConfig).generate());
         });
