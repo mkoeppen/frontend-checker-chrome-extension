@@ -1,8 +1,9 @@
 {
     "manifest_version": 2,
-    "name": "MK Page Checker",
-    "description": "Coding quality checks for web developer",
-    "version": "1.0",
+    "name": "FE Checklist",
+    "short_name": "FE Checklist",
+    "description": "Todolist for web developer",
+    "version": "0.0.0.1",
     "author": "Markus Köppen",
     "background": {
         "scripts": ["background.js"],
@@ -12,10 +13,10 @@
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
-          "16": "images/get_started16.png",
-          "32": "images/get_started32.png",
-          "48": "images/get_started48.png",
-          "128": "images/get_started128.png"
+          "16": "images/icon16.png",
+          "32": "images/icon32.png",
+          "48": "images/icon48.png",
+          "128": "images/icon128.png"
         }
     },
     "icons": {

@@ -5,7 +5,7 @@
     - export projects
     - import projects
     - copy project function
-    
+- refresh test tabs after changing project test config
 - runnable automated tests
 - disable/enable Auto run tests
 - add "new version" info with list of new Tests
