@@ -17,7 +17,14 @@ class TestListItem {
         
         // checkbox
         var checkboxContainer = document.createElement("label"),
-        checkbox = new Checkbox(this.test.id);
+        checkbox = new Checkbox(this.test.id, this.test.checked, (state) => {
+            document.dispatchEvent(new CustomEvent('change-test-check-state', { 
+                detail: {
+                    testId: this.test.id,
+                    checked: state
+                }
+            }));
+        });
         checkboxContainer.classList = "k-test__checkbox-container";
         checkboxContainer.append(checkbox.generate());
         testContainer.append(checkboxContainer);

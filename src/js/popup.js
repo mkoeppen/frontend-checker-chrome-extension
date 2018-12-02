@@ -17,12 +17,13 @@ class Popup {
     }
     init() {   
         chrome.tabs.getSelected(null, (tab) => {
-            this.testHandler = new TestHandler();
             this.projectHandler = new ProjectHandler(tab.url, this.testHandler);
+            this.projectHandler.init();
             this.projectHandler.loadProjectListAsync().then(() => {
                 this.initTestHandler();
                 this.initTabStrip();
             });
+            this.testHandler = new TestHandler(this.projectHandler);
         });
     }
     initTestHandler() {        
@@ -35,7 +36,7 @@ class Popup {
                     title: "Manual",
                     classList: "k-manual-tests",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
-                        var manualTests = this.testHandler.getAllManualTests();
+                        var manualTests = this.testHandler.getAllManualTests(true);
                         contentElement.append(new TestListPage(this.projectHandler, manualTests).generate());
                     }
                 },
@@ -43,7 +44,7 @@ class Popup {
                     title: "Automated",
                     classList: "k-automated-tests",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
-                        var manualTests = this.testHandler.getAllAutomatedTests();
+                        var manualTests = this.testHandler.getAllAutomatedTests(true);
                         contentElement.append(new TestListPage(this.projectHandler, manualTests).generate());                        
                     }
                 },
@@ -51,7 +52,7 @@ class Popup {
                     title: "All",
                     classList: "k-all-tests",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
-                        var manualTests = this.testHandler.getAllTests();
+                        var manualTests = this.testHandler.getAllTests(true);
                         contentElement.append(new TestListPage(this.projectHandler, manualTests).generate());                        
                     }
                 },

@@ -9,7 +9,8 @@ import SeoTests from './tests/seo';
 import WebFontsTests from './tests/webfonts';
 
 export default class {
-    constructor() {
+    constructor(projectHandler) {
+        this.projectHandler = projectHandler;
         this.tests = [
             ...AccessibilityTests.map((test) => { test.category = "accessibility"; return test; }),
             ...CssTests.map((test) => { test.category = "css"; return test; }),
@@ -23,19 +24,26 @@ export default class {
         ];
     }
     init() {
-        console.log("init Tester2");
-        console.table(this.tests);
+
     }
     runTests() {
         console.log("run Tester2 yeah");
     }
-    getAllTests() {
-        return this.tests;
+    adjustWithOverwrites(tests) {
+        return (tests ||[]).map((test) => {
+            var overwrites = (this.projectHandler.activeProjectState.testOverwrites || []).find((testOverwrite) => { return testOverwrite.id === test.id; }) || {};            
+            return {...test, ...overwrites};
+        }).filter(test => { return (typeof test.isActive !== "undefined" ? test.isActive : true) });
     }
-    getAllAutomatedTests() {
-        return this.tests.filter(function(test) { return typeof test.automatedTest === "function" });
+    getAllTests(withOverwrites) {
+        return withOverwrites ? this.adjustWithOverwrites(this.tests) : this.tests;
     }
-    getAllManualTests() {
-        return this.tests.filter(function(test) { return typeof test.automatedTest !== "function" });
+    getAllAutomatedTests(withOverwrites) {
+        var tests = this.tests.filter(function(test) { return typeof test.automatedTest === "function" });
+        return withOverwrites ? this.adjustWithOverwrites(tests) : tests;
+    }
+    getAllManualTests(withOverwrites) {
+        var tests = this.tests.filter(function(test) { return typeof test.automatedTest !== "function" });
+        return withOverwrites ? this.adjustWithOverwrites(tests) : tests;
     }
 }

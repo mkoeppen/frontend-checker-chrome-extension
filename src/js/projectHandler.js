@@ -9,6 +9,11 @@ export default class ProjectHandler {
         this.activeProject = undefined;
         this.activeProjectState = undefined;
     }
+    init() {
+        document.addEventListener('change-test-check-state', (e) => {
+            this.onChangeTestCheckState(e.detail.testId, e.detail.checked);
+        });
+    }
     loadProjectListAsync() {
         var that = this;
         return new Promise((resolve, reject) => {
@@ -195,5 +200,13 @@ export default class ProjectHandler {
                 })
             });   
         });     
+    }
+    onChangeTestCheckState(testId, checked) {
+        if(typeof this.activeProject.id === "string") {
+            this.adjustProjectTestConfigAsync(this.activeProject.id, testId, state => {
+                state.checked = checked;
+                return state;
+            });
+        }
     }
 }
