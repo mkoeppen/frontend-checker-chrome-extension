@@ -5,6 +5,7 @@
     - export projects
     - import projects
     - copy project function
+    
 - runnable automated tests
 - disable/enable Auto run tests
 - add "new version" info with list of new Tests
