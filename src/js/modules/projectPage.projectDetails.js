@@ -19,7 +19,7 @@ export default class ProjectDetails {
                 tabLabel: "Project",
                 tabIcon: "fa fa-list-alt",
                 initFunc: (project) => {
-                    return new ProjectSettings(project).generate();
+                    return new ProjectSettings(this.projectHandler, project).generate();
                 }
             },
             {

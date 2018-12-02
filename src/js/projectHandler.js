@@ -22,20 +22,8 @@ export default class ProjectHandler {
                     console.error(chrome.runtime.lastError.message);
                     reject(chrome.runtime.lastError.message);
                 } else {
-                    that.projectList = (result.projectList || []).map((p) => {
-                        var hasMatchingWhiteListRegex = false,
-                            hasMatchingBlackListRegex = false;
-    
-                        (p.whitelistUrls || "").split("\n").forEach(regex => {
-                            hasMatchingWhiteListRegex = hasMatchingWhiteListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(this.url));
-                        });
-    
-                        (p.blacklistUrls || "").split("\n").forEach(regex => {
-                            hasMatchingBlackListRegex = hasMatchingBlackListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(this.url));
-                        });
-    
-                        p.hasMatchingRegex = hasMatchingWhiteListRegex && !hasMatchingBlackListRegex;
-    
+                    that.projectList = (result.projectList || []).map((p) => {    
+                        p.hasMatchingRegex = that.checkMatchingUrlRegex(p.whitelistUrls, p.blacklistUrls);
                         return p;
                     });
                   
@@ -208,5 +196,19 @@ export default class ProjectHandler {
                 return state;
             });
         }
+    }
+    checkMatchingUrlRegex(whitelist, blacklist) {
+        var hasMatchingWhiteListRegex = false,
+            hasMatchingBlackListRegex = false;
+
+        (whitelist || "").split("\n").forEach(regex => {
+            hasMatchingWhiteListRegex = hasMatchingWhiteListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(`^${regex}$`).test(this.url));
+        });
+
+        (blacklist || "").split("\n").forEach(regex => {
+            hasMatchingBlackListRegex = hasMatchingBlackListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(`^${regex}$`).test(this.url));
+        });
+
+        return hasMatchingWhiteListRegex && !hasMatchingBlackListRegex;
     }
 }

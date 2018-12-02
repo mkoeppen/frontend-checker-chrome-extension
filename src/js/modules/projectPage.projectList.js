@@ -11,7 +11,6 @@ class ProjectListItem {
     generate() {
         this.element = document.createElement("li");
         this.element.classList.add("k-project");
-        console.log(this.project.hasMatchingRegex);
         if(this.project.hasMatchingRegex) {
             this.element.classList.add("k-project--matched");
         }
