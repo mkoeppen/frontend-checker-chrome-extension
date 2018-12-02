@@ -8,7 +8,7 @@
     padding: 0;
     margin: 0;
     flex-grow: 1;
-    padding: 0 20px;
+    padding: 0 70px 0 20px;
     background: #404040;
     color: white;
     height: 40px;
@@ -21,6 +21,22 @@
     top: 0;
     left: 0;
     right: 0;
+}
+
+.k-test-list__checked-counter {
+    font-size: 12px;
+    background: #ffe7b9;
+    color: #4a4a4a;
+    border-radius: 2px;
+    padding: 2px 8px;
+    position: absolute;
+    right: 6px;
+}
+
+.k-test-list__checked-counter b + b:before {
+    content: "";
+    border-left: 1px solid #c19434;
+    margin: 0 4px;
 }
 
 .k-test-list__wrapper {

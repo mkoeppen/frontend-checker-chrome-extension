@@ -1,14 +1,6 @@
 # frontend-checker-chrome-extension
 
 # ToDo
-
-## Next Version
-- project handling
-    - load project with whitelist and Blacklist
-    - show current Matching projects
-- Show status in popup
-
-## Future Versions 
 - project handling
     - export projects
     - import projects

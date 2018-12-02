@@ -1,5 +1,6 @@
 'use strict'
 import Checkbox from './checkbox'
+import jsHelper from '../jsHelper';
 
 class TestListItem {
     constructor(test) {
@@ -64,11 +65,34 @@ class TestList {
     }
 }
 
+class CheckedCounter {
+    constructor(checkedCount, fullCount) {
+        this.checkedCount = checkedCount || 0;
+        this.fullCount = fullCount || 0;
+        this.element = undefined;
+    }
+    generate() {
+        this.element = document.createElement("span");
+        this.element.classList.add("k-test-list__checked-counter");
+        this.refreshElement();
+        return this.element;
+    }
+    refreshElement() {
+        jsHelper.empty(this.element);
+        this.element.innerHTML = `<b>${this.checkedCount}</b><b>${this.fullCount}</b>`;
+    }
+    add(count) {
+        this.checkedCount+=count;
+        this.refreshElement();
+    }
+}
+
 export default class TestListPage {
     constructor(projectHandler, tests) {
         this.element = undefined;
         this.projectHandler = projectHandler;
-        this.tests = tests;
+        this.tests = tests || [];
+        this.checkedCounter = undefined;
     }
     generate() {        
         // init tab title
@@ -77,9 +101,15 @@ export default class TestListPage {
 
         var activeProjectHeadline = document.createElement("h2");
         activeProjectHeadline.innerHTML = this.projectHandler.activeProject.name;
+        this.checkedCounter = new CheckedCounter(this.tests.filter(test => test.checked).length, this.tests.length);
+        activeProjectHeadline.append(this.checkedCounter.generate());
         this.element.append(activeProjectHeadline);
 
         this.element.append(new TestList(this.tests).generate());
+
+        document.addEventListener('change-test-check-state', (e) => {
+            this.checkedCounter.add(e.detail.checked ? 1 : -1);
+        })
 
         return this.element;
     }
