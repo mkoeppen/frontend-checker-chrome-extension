@@ -156,7 +156,7 @@ export default class ProjectHandler {
     }
     initNewProject(callback) {
         var id = jsHelper.guid();
-        var pathArray = this.split( '/' );
+        var pathArray = this.url.split( '/' );
         var protocol = pathArray[0];
         var host = pathArray[2];
         var whitelistUrl = protocol + '//' + host.replace("/", "\/").replace(".", "\.") + "/.*";

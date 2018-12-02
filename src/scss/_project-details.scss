@@ -1,0 +1,74 @@
+.k-project-details {
+    padding: 0 20px;
+
+    &__wrapper {
+        display: none;
+        padding-left: 30px;
+        padding-top: 40px;
+        position: relative;
+        height: 100%;
+        box-sizing: border-box;
+    
+        .k-projects.k-editmode & {
+            display: block;
+        }
+    }
+
+    &__menu {
+        width: 30px;
+        float: left;
+        margin-left: -30px;
+        clear: both;
+        position: absolute;
+        top: 41px;
+    }
+
+    &__tab-button {
+        width: 30px;
+        height: 30px;
+        border: 0;
+        margin-bottom: 1px;
+        cursor: pointer;
+
+        &.is-active {
+            background: orange;
+        }
+    }
+
+    &__header {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    &__headline {
+        padding: 0;
+        margin: 0;
+        flex-grow: 1;
+        padding: 0 20px;
+        background: #404040;
+        color: white;
+        height: 40px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__stop-editmode-button {
+        width: 30px;
+        height: 40px;
+        border: 0;
+        margin-bottom: 1px;
+        cursor: pointer;
+    }
+    
+    &__content {
+        clear: both;
+    }
+
+    &__form {
+        padding: 20px;
+    }
+}

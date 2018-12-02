@@ -8,7 +8,7 @@ export default class ProjectSettings {
     generate() {        
         this.element = document.createElement("form");
         this.element.classList.add("k-form");
-        this.element.classList.add("k-project-details-form");
+        this.element.classList.add("k-project-details__form");
         this.element.innerHTML = `
             <input name="id" type="hidden" value="${this.project.id || ""}">
             <div class="k-form__row"><label for="name">Name:</label><input id="name" name="name" type="text" value="${this.project.name || ""}"></div>

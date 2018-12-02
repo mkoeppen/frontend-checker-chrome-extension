@@ -1,0 +1,15 @@
+.k-project-list {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+
+    .k-projects.k-editmode & {
+        display: none;
+    }
+
+    &__controls {
+        .k-projects.k-editmode & {
+            display: none;
+        }
+    }
+}

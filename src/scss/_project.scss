@@ -1,0 +1,45 @@
+.k-project {
+    display: flex;
+    background: white;
+    margin-bottom: 2px;
+    justify-content: space-between;
+
+    &__controls {
+        display: flex;
+        padding: 0 10px;
+        align-items: center;
+
+        .k-button + .k-button {
+            margin-left: 10px; 
+        }
+    }
+
+    &--matched,
+    &--active {
+        .k-project__name:after {
+            content: "\f05d";
+            color: #cccccc;
+            float: right;
+            margin-right: -17px;
+            display: block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 15px;
+        }
+    }
+
+    &--active {
+        .k-project__name:after {
+            content: "\f058";
+            color: green;
+        }
+    }
+
+    > .k-project__name {
+        padding: 10px 20px;
+        font-weight: bold;
+    }
+}
