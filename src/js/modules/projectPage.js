@@ -47,23 +47,23 @@ export default class ProjectPage {
     } 
     onDeleteProject(project) {
         this.projectHandler.deleteProjectAsync(project.id).then(() => {
-            this.projectList.refresh()
+            document.dispatchEvent(new CustomEvent('reinit-popup', { detail: { activeTab: "projects" } }));
         });
     }
-    onEditProject(project, state) {
+    onEditProject(project, state, showTestTabs) {
         if(!state) {
             this.projectHandler.loadProjectStateAsync(project.id).then((state) => {
                 this.element.classList.add("k-editmode");
-                this.projectDetails.initProject(project, state);
+                this.projectDetails.initProject(project, state, showTestTabs);
             });
         } else {            
             this.element.classList.add("k-editmode");
-            this.projectDetails.initProject(project, state);
+            this.projectDetails.initProject(project, state, showTestTabs);
         }
     }
     onNewProject() {
         this.projectHandler.initNewProject((newConfig) => {
-            this.onEditProject(newConfig.project, newConfig.state);
+            this.onEditProject(newConfig.project, newConfig.state, false);
         });
     }
     onEditCancelProject() {
@@ -73,7 +73,7 @@ export default class ProjectPage {
     }
     onSaveProject(project) {
         this.projectHandler.saveProjectAsync(project).then(() => {
-            this.onEditCancelProject();
+            document.dispatchEvent(new CustomEvent('reinit-popup', { detail: { activeTab: "projects" } }))
         });
     }
     onSaveProjectState(projectId, state) {

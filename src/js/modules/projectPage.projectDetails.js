@@ -78,7 +78,7 @@ export default class ProjectDetails {
 
         return this.element;
     }
-    initProject(project, state) {
+    initProject(project, state, showTestTabs) {
         this.project = project || {};
         this.state = state || {};
         this.clear();
@@ -104,7 +104,11 @@ export default class ProjectDetails {
         this.header.append(headline);
 
         // menu
-        this.menu = new ProjectDetailsMenu(this.menuItems);
+        var menuItems = this.menuItems;
+        if(typeof showTestTabs === "boolean" && !showTestTabs) {
+            menuItems = menuItems.filter(menuItem => menuItem.tabName === "project");
+        }
+        this.menu = new ProjectDetailsMenu(menuItems);
         this.element.append(this.menu.generate());
 
         // details content

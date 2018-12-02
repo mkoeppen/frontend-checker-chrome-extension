@@ -5,6 +5,11 @@
     background: darkorange;
     color: white;
     font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+        background: rgb(212, 117, 0);
+    }
 
     &--icon-only {
         padding-left: 0;

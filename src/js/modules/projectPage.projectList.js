@@ -67,7 +67,7 @@ export default class ProjectList {
 
         var newProjectButton = document.createElement("button");
         newProjectButton.classList.add("k-button");
-        newProjectButton.innerHTML = "+";
+        newProjectButton.innerHTML = "Create new Project";
         newProjectButton.addEventListener("click", () => {
             document.dispatchEvent(new CustomEvent('project-new'));
         })

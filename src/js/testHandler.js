@@ -31,7 +31,7 @@ export default class {
     }
     adjustWithOverwrites(tests) {
         return (tests ||[]).map((test) => {
-            var overwrites = (this.projectHandler.activeProjectState.testOverwrites || []).find((testOverwrite) => { return testOverwrite.id === test.id; }) || {};            
+            var overwrites = ((this.projectHandler.activeProjectState || {}).testOverwrites || []).find((testOverwrite) => { return testOverwrite.id === test.id; }) || {};            
             return {...test, ...overwrites};
         }).filter(test => { return (typeof test.isActive !== "undefined" ? test.isActive : true) });
     }
