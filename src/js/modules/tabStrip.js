@@ -25,7 +25,6 @@ export default class TabStrip {
         // init tabs
         this.tabs.forEach(tab => {
             this.addTab(tab);
-            console.log(tab);
         });
         this.activateTab(this.active);
     }

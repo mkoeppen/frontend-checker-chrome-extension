@@ -6,6 +6,7 @@ export default class ProjectHandler {
     constructor() {
         this.projectList = [];
         this.activeProject = undefined;
+        this.activeProjectState = undefined;
     }
     loadProjectListAsync() {
         var that = this;
@@ -15,7 +16,6 @@ export default class ProjectHandler {
                     console.error(chrome.runtime.lastError.message);
                     reject(chrome.runtime.lastError.message);
                 } else {
-                    console.log('Value currently is ' + result.projectList);
                     that.projectList = result.projectList || [];
                     resolve(result.projectList);
                 }
@@ -29,7 +29,6 @@ export default class ProjectHandler {
                     console.error(chrome.runtime.lastError.message);
                     reject(chrome.runtime.lastError.message);
                 } else {
-                    console.log('Value currently is ' + result[`project_state_${projectId}`]);
                     resolve(result[`project_state_${projectId}`] || {});
                 }
             });
@@ -38,12 +37,18 @@ export default class ProjectHandler {
     saveProjectListAsync() {
         var that = this;
         return new Promise((resolve, reject) => {
+            // order projects
+            that.projectList = that.projectList.sort(function(a, b){
+                if(a.name < b.name) { return -1; }
+                if(a.name > b.name) { return 1; }
+                return 0;
+            })
+            // save
             chrome.storage.local.set({projectList: that.projectList}, () => {
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError.message);
                     reject(chrome.runtime.lastError.message);
                 } else {
-                    console.log('Value is set to ' + that.projectList);
                     resolve();
                 }
             });
@@ -64,7 +69,6 @@ export default class ProjectHandler {
                     console.error(chrome.runtime.lastError.message);
                     reject(chrome.runtime.lastError.message);
                 } else {
-                    console.log('Value is set to ' + stateObject);
                     resolve();
                 }
             });
@@ -162,28 +166,35 @@ export default class ProjectHandler {
             });   
         });     
     }
-    checkMatchingProject(url) {
+    checkMatchingProject(url, activateAfterMatch) {
+        var activateAfterMatch = activateAfterMatch || false;
+
         return new Promise((resolve, reject) => {
             this.loadProjectListAsync().then(() => {
                 var project = this.projectList.find((p) => {
+                    var hasMatchingWhiteListRegex = false,
+                        hasMatchingBlackListRegex = false;
 
-                    var matchingWhitelistRegex = (p.whitelistUrls || "").split("\n").find((regex) => {
-                        return RegExp(regex).test(url);
+                    (p.whitelistUrls || "").split("\n").forEach(regex => {
+                        hasMatchingWhiteListRegex = hasMatchingWhiteListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(url));
                     });
 
-                    var matchingBlacklistRegex = (p.blacklistUrls || "").split("\n").find((regex) => {
-                        return RegExp(regex).test(url);
+                    (p.blacklistUrls || "").split("\n").forEach(regex => {
+                        hasMatchingBlackListRegex = hasMatchingBlackListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(url));
                     });
 
-                    console.log(matchingWhitelistRegex);
-                    console.log(matchingBlacklistRegex);
-
-                    return matchingWhitelistRegex && !matchingBlacklistRegex;
+                    return hasMatchingWhiteListRegex && !hasMatchingBlackListRegex;
                 });
 
-                console.table(project);
-
-                resolve(project);
+                if(activateAfterMatch) {
+                    this.activeProject = project;
+                    this.loadProjectStateAsync(project.id).then((state) => {
+                        this.activeProjectState = state;
+                        resolve(project);
+                    });
+                } else {
+                    resolve(project);
+                }
             });   
         });     
     }

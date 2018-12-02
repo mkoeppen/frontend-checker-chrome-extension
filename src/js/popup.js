@@ -18,8 +18,7 @@ class Popup {
     init() {   
         chrome.tabs.getSelected(null, (tab) => {
             var url = tab.url;
-            this.projectHandler.checkMatchingProject(url).then((data) => {
-                console.table(data);
+            this.projectHandler.checkMatchingProject(url, true).then(() => {
                 this.initTestHandler();
                 this.initTabStrip();
             });
@@ -37,7 +36,7 @@ class Popup {
                     classList: "k-manual-tests",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
                         var manualTests = this.testHandler.getAllManualTests();
-                        contentElement.append(new TestListPage(manualTests).generate());
+                        contentElement.append(new TestListPage(this.projectHandler, manualTests).generate());
                     }
                 },
                 {
@@ -45,7 +44,7 @@ class Popup {
                     classList: "k-automated-tests",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
                         var manualTests = this.testHandler.getAllAutomatedTests();
-                        contentElement.append(new TestListPage(manualTests).generate());                        
+                        contentElement.append(new TestListPage(this.projectHandler, manualTests).generate());                        
                     }
                 },
                 {
@@ -53,7 +52,7 @@ class Popup {
                     classList: "k-all-tests",
                     initTabFunc: (contentElement, titleElement, tabStrip) => {
                         var manualTests = this.testHandler.getAllTests();
-                        contentElement.append(new TestListPage(manualTests).generate());                        
+                        contentElement.append(new TestListPage(this.projectHandler, manualTests).generate());                        
                     }
                 },
                 {

@@ -4,6 +4,38 @@
     margin: 0;
 }
 
+.k-test-list__wrapper > h2 {
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    padding: 0 20px;
+    background: #404040;
+    color: white;
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.k-test-list__wrapper {
+    height: 100%;
+    padding-top: 40px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.k-test-list__wrapper .k-test-list {
+    overflow: auto;
+    height: 100%;
+}
+
+
 .k-test {
     margin-bottom: 2px;
     background: #ffffff;

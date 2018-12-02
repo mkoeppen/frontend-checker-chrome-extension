@@ -39,7 +39,7 @@ class TestListItem {
     }
 }
 
-export default class TestListPage {
+class TestList {
     constructor(tests) {
         this.element = undefined;
         this.tests = tests;
@@ -52,6 +52,27 @@ export default class TestListPage {
         this.tests.forEach((test) => {
             this.element.append(new TestListItem(test).generate());
         })
+
+        return this.element;
+    }
+}
+
+export default class TestListPage {
+    constructor(projectHandler, tests) {
+        this.element = undefined;
+        this.projectHandler = projectHandler;
+        this.tests = tests;
+    }
+    generate() {        
+        // init tab title
+        this.element = document.createElement("div");
+        this.element.classList.add("k-test-list__wrapper");
+
+        var activeProjectHeadline = document.createElement("h2");
+        activeProjectHeadline.innerHTML = this.projectHandler.activeProject.name;
+        this.element.append(activeProjectHeadline);
+
+        this.element.append(new TestList(this.tests).generate());
 
         return this.element;
     }
