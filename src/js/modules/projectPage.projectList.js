@@ -3,13 +3,21 @@
 import jsHelper from '../jsHelper'
 
 class ProjectListItem {
-    constructor(project) {
+    constructor(projectHandler, project) {
+        this.projectHandler = projectHandler;
         this.element = undefined;
         this.project = project;
     }
     generate() {
         this.element = document.createElement("li");
         this.element.classList.add("k-project");
+        console.log(this.project.hasMatchingRegex);
+        if(this.project.hasMatchingRegex) {
+            this.element.classList.add("k-project--matched");
+        }
+        if(this.projectHandler.activeProject.id === this.project.id) {
+            this.element.classList.add("k-project--active");
+        }
         this.element.setAttribute("data-project-id", this.project.id);
 
         this.element.innerHTML = `
@@ -72,7 +80,7 @@ export default class ProjectList {
 
         this.projectHandler.loadProjectListAsync().then((projectList) => {
             (projectList || []).forEach(project => {
-                this.projectDetailsList.append(new ProjectListItem(project).generate());
+                this.projectDetailsList.append(new ProjectListItem(this.projectHandler, project).generate());
             });
         });
     }

@@ -3,7 +3,8 @@
 import jsHelper from './jsHelper'
 
 export default class ProjectHandler {
-    constructor() {
+    constructor(url) {
+        this.url = url;
         this.projectList = [];
         this.activeProject = undefined;
         this.activeProjectState = undefined;
@@ -16,8 +17,39 @@ export default class ProjectHandler {
                     console.error(chrome.runtime.lastError.message);
                     reject(chrome.runtime.lastError.message);
                 } else {
-                    that.projectList = result.projectList || [];
-                    resolve(result.projectList);
+                    that.projectList = (result.projectList || []).map((p) => {
+                        var hasMatchingWhiteListRegex = false,
+                            hasMatchingBlackListRegex = false;
+    
+                        (p.whitelistUrls || "").split("\n").forEach(regex => {
+                            hasMatchingWhiteListRegex = hasMatchingWhiteListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(this.url));
+                        });
+    
+                        (p.blacklistUrls || "").split("\n").forEach(regex => {
+                            hasMatchingBlackListRegex = hasMatchingBlackListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(this.url));
+                        });
+    
+                        p.hasMatchingRegex = hasMatchingWhiteListRegex && !hasMatchingBlackListRegex;
+    
+                        return p;
+                    });
+                  
+                    var activeProject = that.projectList.find((p) => {
+                        return p.hasMatchingRegex;
+                    });
+                    
+                    if(activeProject) {
+                        that.activeProject = activeProject;
+                        that.loadProjectStateAsync(activeProject.id).then((state) => {
+                            that.activeProjectState = state || {};
+                            resolve(that.projectList);
+                        });
+                    } else {
+                        that.activeProject = {};
+                        that.activeProjectState = {};
+                        resolve(that.projectList);
+                    }
+                    
                 }
             });
         });
@@ -118,24 +150,22 @@ export default class ProjectHandler {
         return project.length > 0 ? project[0] : undefined
     }
     initNewProject(callback) {
-        chrome.tabs.getSelected(null, (tab) => {
-            var id = jsHelper.guid();
-            var pathArray = tab.url.split( '/' );
-            var protocol = pathArray[0];
-            var host = pathArray[2];
-            var whitelistUrl = protocol + '//' + host.replace("/", "\/").replace(".", "\.") + "/.*";
+        var id = jsHelper.guid();
+        var pathArray = this.split( '/' );
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var whitelistUrl = protocol + '//' + host.replace("/", "\/").replace(".", "\.") + "/.*";
 
-            callback({
-                project: {
-                    id: id,
-                    name: host,
-                    blacklistUrls: "",
-                    whitelistUrls: whitelistUrl
-                },
-                state: {
-                    testOverwrites: []
-                }
-            });
+        callback({
+            project: {
+                id: id,
+                name: host,
+                blacklistUrls: "",
+                whitelistUrls: whitelistUrl
+            },
+            state: {
+                testOverwrites: []
+            }
         });
     }
     saveProjectAsync(project) {
@@ -163,38 +193,6 @@ export default class ProjectHandler {
                 ]).then(() => {
                     resolve();
                 })
-            });   
-        });     
-    }
-    checkMatchingProject(url, activateAfterMatch) {
-        var activateAfterMatch = activateAfterMatch || false;
-
-        return new Promise((resolve, reject) => {
-            this.loadProjectListAsync().then(() => {
-                var project = this.projectList.find((p) => {
-                    var hasMatchingWhiteListRegex = false,
-                        hasMatchingBlackListRegex = false;
-
-                    (p.whitelistUrls || "").split("\n").forEach(regex => {
-                        hasMatchingWhiteListRegex = hasMatchingWhiteListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(url));
-                    });
-
-                    (p.blacklistUrls || "").split("\n").forEach(regex => {
-                        hasMatchingBlackListRegex = hasMatchingBlackListRegex || (typeof regex === "string" && regex.length > 0 && RegExp(regex).test(url));
-                    });
-
-                    return hasMatchingWhiteListRegex && !hasMatchingBlackListRegex;
-                });
-
-                if(activateAfterMatch) {
-                    this.activeProject = project;
-                    this.loadProjectStateAsync(project.id).then((state) => {
-                        this.activeProjectState = state;
-                        resolve(project);
-                    });
-                } else {
-                    resolve(project);
-                }
             });   
         });     
     }

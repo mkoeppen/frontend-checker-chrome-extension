@@ -8,21 +8,21 @@ import ProjectPage from './modules/projectPage';
 
 class Popup {
     constructor(popupElement) {
-        this.testHandler = new TestHandler();
+        this.testHandler = undefined;
         this.popup = popupElement;
         this.tabStrip = undefined;
         this.automatedTestsList = document.querySelector(".k-automated-tests")
         this.manualTestsList = document.querySelector(".k-manual-tests")
-        this.projectHandler = new ProjectHandler(this.testHandler);
+        this.projectHandler = undefined;
     }
     init() {   
         chrome.tabs.getSelected(null, (tab) => {
-            var url = tab.url;
-            this.projectHandler.checkMatchingProject(url, true).then(() => {
+            this.testHandler = new TestHandler();
+            this.projectHandler = new ProjectHandler(tab.url, this.testHandler);
+            this.projectHandler.loadProjectListAsync().then(() => {
                 this.initTestHandler();
                 this.initTabStrip();
             });
-
         });
     }
     initTestHandler() {        
