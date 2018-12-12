@@ -77,6 +77,32 @@ export default class ProjectList {
         })
         this.toolbar.append(newProjectButton);
 
+        var importProjectInput = document.createElement("input");
+        importProjectInput.setAttribute('type', 'file');
+        importProjectInput.addEventListener('change', (e) => {
+            var that = this;
+            var reader = new FileReader();
+            reader.onload = function onReaderLoad(event){
+                var importedData = JSON.parse(event.target.result);
+
+                that.projectHandler.saveProjectAsync(importedData.project).then(() => {
+                    that.projectHandler.saveProjectStateAsync(importedData.project.id, importedData.state).then(() => {
+                        document.dispatchEvent(new CustomEvent('reinit-popup', { detail: { activeTab: "projects" } }))
+                    });
+                });
+            };
+            reader.readAsText(event.target.files[0]);
+        });
+
+        var importProjectButton = document.createElement("button");
+        importProjectButton.classList.add("k-button");
+        importProjectButton.setAttribute('title', 'Import Project');
+        importProjectButton.innerHTML = "<i class='fa fa-upload'><i>";
+        importProjectButton.addEventListener("click", () => {
+            importProjectInput.click();
+        });
+        this.toolbar.append(importProjectButton);
+
         return this.element;
     }
     refresh() {

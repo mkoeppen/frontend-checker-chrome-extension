@@ -2,8 +2,7 @@
 
 # ToDo
 - project handling
-    - export projects
-    - import projects
+    - feedback after project import
     - copy project function
 - refresh test tabs after changing project test config
 - runnable automated tests
