@@ -22,10 +22,15 @@ class ProjectListItem {
         this.element.innerHTML = `
         <span class="k-project__name">${this.project.name}</span>
         <div class="k-project__controls">
+            <button class="k-button k-button--icon-only k-project__export-button" title="Export"><i class="fa fa-download" aria-hidden="true"></i></button>
             <button class="k-button k-button--icon-only k-project__delete-button" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
             <button class="k-button k-button--icon-only k-project__edit-button" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
         </div>`;
 
+
+        this.element.querySelector(".k-project__export-button").addEventListener("click", () => {
+            document.dispatchEvent(new CustomEvent('project-export', { detail: this.project }));
+        });
 
         this.element.querySelector(".k-project__delete-button").addEventListener("click", () => {
             document.dispatchEvent(new CustomEvent('project-delete', { detail: this.project }));

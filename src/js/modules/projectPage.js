@@ -22,6 +22,10 @@ export default class ProjectPage {
         this.projectDetails = new ProjectDetails(this.projectHandler, this.testHandler);
         this.element.append(this.projectDetails.generate());
 
+        document.addEventListener('project-export', (e) => {
+            this.onExportProject(e.detail);
+        }, false);
+
         document.addEventListener('project-delete', (e) => {
             this.onDeleteProject(e.detail);
         }, false);
@@ -45,6 +49,24 @@ export default class ProjectPage {
 
         return this.element;
     } 
+    onExportProject(project) {
+        this.projectHandler.loadProjectStateAsync(project.id).then((state) => {
+
+            const data = {
+                project: project,
+                state: state
+            };
+            delete data.project.hasMatchingRegex;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data)),
+            downloadAnchorNode = document.createElement('a');
+
+            downloadAnchorNode.setAttribute("href",     dataStr);
+            downloadAnchorNode.setAttribute("download", project.name.toLowerCase().replace(/[^a-z]+/g, '_') + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        });
+    }    
     onDeleteProject(project) {
         this.projectHandler.deleteProjectAsync(project.id).then(() => {
             document.dispatchEvent(new CustomEvent('reinit-popup', { detail: { activeTab: "projects" } }));
